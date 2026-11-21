@@ -12,7 +12,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 ## CATAPULTA (conclusa) – "La catapulta in giardino"
 - Parte 1 PUBBLICATA 21/11 14:20 (postId d119e34e) – creata slot 14:00: video/catapulta_parte1.mp4 – CTA "LANCIO". Finale: Gino lanciato dalla catapulta gigante (Mario tira la leva).
 - Parte 2 PUBBLICATA 21/11 17:18 (postId 1a0ffd4b) – creata slot 17:00: video/catapulta_parte2.mp4 – CTA "GUERRA". Gino atterra sul tetto di Mario, notte lassù, Mario gli lancia pomodori, la catapulta di Gino sparisce, Mario ne ha una gigante puntata su casa di Gino (scene12.html/anim12.js, uCatFlip).
-- Parte 3 FINALE creata 21/11 (slot 19:00): video/catapulta_parte3.mp4 – guerra di catapulte, i due bidoni si scontrano a metà strada e distruggono entrambe le catapulte, pace e pomodori alla griglia, FINE (scene13.html/anim13.js, due catapulte uCat/uCat2). SERIE CONCLUSA dopo la pubblicazione., parte 3 FINALE alle 19:00 (chiude con "FINE – Seguici per la prossima storia").
+- Parte 3 FINALE creata 21/11 (slot 19:00): video/catapulta_parte3.mp4 – guerra di catapulte, i due bidoni si scontrano a metà strada e distruggono entrambe le catapulte, pace e pomodori alla griglia, FINE (scene13.html/anim13.js, due catapulte uCat/uCat2). PUBBLICATA 21/11 19:22 su TikTok+Instagram (postId 523612cb); YouTube rimandato al 22/11 09:05 (limite 3 upload/giorno vidIQ free). SERIE CONCLUSA., parte 3 FINALE alle 19:00 (chiude con "FINE – Seguici per la prossima storia").
 - Scena: /tmp/claude-0/r3d/scene11.html + anim11.js
 
 ## Prossima
