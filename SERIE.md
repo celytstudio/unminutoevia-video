@@ -10,7 +10,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - BUCA: parti 1-3 pubblicate (CTA "TUNNEL"): Mario e il tunnel. Parte 4 FINALE creata 21/11 11:00 (il tunnel porta alla cantina di Gino: Mario usa il suo wifi da 20 anni; FINE) — PUBBLICATA 21/11 11:25. SERIE CONCLUSA.
 
 ## CATAPULTA (in corso) – "La catapulta in giardino"
-- Parte 1 creata 21/11 (slot 14:00): video/catapulta_parte1.mp4 – CTA "LANCIO". Finale: Gino lanciato dalla catapulta gigante (Mario tira la leva).
+- Parte 1 PUBBLICATA 21/11 14:20 (postId d119e34e) – creata slot 14:00: video/catapulta_parte1.mp4 – CTA "LANCIO". Finale: Gino lanciato dalla catapulta gigante (Mario tira la leva).
 - Parte 2 alle 17:00 (dove atterra Gino?), parte 3 FINALE alle 19:00 (chiude con "FINE – Seguici per la prossima storia").
 - Scena: /tmp/claude-0/r3d/scene11.html + anim11.js
 
