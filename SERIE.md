@@ -9,11 +9,11 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - RAZZO: parte 1 pubblicata 19/11 18:15 (CTA "RAZZO"). Parte 2 creata 20/11 17:00 (cade, Gino nell'oblò, agita la cola, motore riparte al contrario, punta nella buca; CTA "BUCA") — PUBBLICATA 20/11 17:25. Parte 3 FINALE creata 20/11 19:00 (il razzo sfonda il portellone, cade nella piscina segreta di Mario, "bentornato", FINE) — PUBBLICATA 20/11 19:25. SERIE CONCLUSA.
 - BUCA: parti 1-3 pubblicate (CTA "TUNNEL"): Mario e il tunnel. Parte 4 FINALE creata 21/11 11:00 (il tunnel porta alla cantina di Gino: Mario usa il suo wifi da 20 anni; FINE) — PUBBLICATA 21/11 11:25. SERIE CONCLUSA.
 
-## CATAPULTA (in corso) – "La catapulta in giardino"
+## CATAPULTA (conclusa) – "La catapulta in giardino"
 - Parte 1 PUBBLICATA 21/11 14:20 (postId d119e34e) – creata slot 14:00: video/catapulta_parte1.mp4 – CTA "LANCIO". Finale: Gino lanciato dalla catapulta gigante (Mario tira la leva).
 - Parte 2 PUBBLICATA 21/11 17:18 (postId 1a0ffd4b) – creata slot 17:00: video/catapulta_parte2.mp4 – CTA "GUERRA". Gino atterra sul tetto di Mario, notte lassù, Mario gli lancia pomodori, la catapulta di Gino sparisce, Mario ne ha una gigante puntata su casa di Gino (scene12.html/anim12.js, uCatFlip).
-- Parte 3 FINALE: guerra di catapulte, parte 3 FINALE alle 19:00 (chiude con "FINE – Seguici per la prossima storia").
+- Parte 3 FINALE creata 21/11 (slot 19:00): video/catapulta_parte3.mp4 – guerra di catapulte, i due bidoni si scontrano a metà strada e distruggono entrambe le catapulte, pace e pomodori alla griglia, FINE (scene13.html/anim13.js, due catapulte uCat/uCat2). SERIE CONCLUSA dopo la pubblicazione., parte 3 FINALE alle 19:00 (chiude con "FINE – Seguici per la prossima storia").
 - Scena: /tmp/claude-0/r3d/scene11.html + anim11.js
 
 ## Prossima
-19:00 → CATAPULTA parte 3 (finale).
+Quando la parte 3 della CATAPULTA è pubblicata, tutte le serie sono chiuse: dal prossimo slot (22/11 11:00) iniziare una NUOVA serie (parte 1), poi parte 2 alle 14 e parte 3 (finale) alle 17. Promemoria 22/11 programmati (11, 14, 17, 19).
