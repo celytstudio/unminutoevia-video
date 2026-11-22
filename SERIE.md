@@ -16,10 +16,10 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Scena: /tmp/claude-0/r3d/scene11.html + anim11.js
 
 ## TAPPETO ELASTICO (in corso) – "Il tappeto elastico in giardino"
-- Parte 1 creata 22/11 (slot 11:00): video/tappeto_parte1.mp4 – CTA "MOLLA". Gino salta sempre più in alto (molle da camion, due tappeti impilati); Mario prova, fa un salto solo e sparisce sopra le nuvole.
+- Parte 1 PUBBLICATA 22/11 11:35 (postId a69bd045) – creata slot 11:00: video/tappeto_parte1.mp4 – CTA "MOLLA". Gino salta sempre più in alto (molle da camion, due tappeti impilati); Mario prova, fa un salto solo e sparisce sopra le nuvole.
 - Parte 2 alle 14:00 (dov'è finito Mario?), parte 3 FINALE alle 17:00.
 - Scena: scene14.html (uTramp, uTramp2, uTrampDip) + anim14.js. Sorgenti copiati anche in src/ del repo.
 
 ## Prossima
 22/11 14:00 → TAPPETO parte 2. 17:00 → TAPPETO parte 3 (finale). 19:00 → nuova serie parte 1.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). Il 22/11 ne è già stato usato 1.
+Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). Il 22/11 ne sono già stati usati 2.
