@@ -18,7 +18,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 ## TAPPETO ELASTICO (conclusa) – "Il tappeto elastico in giardino"
 - Parte 1 PUBBLICATA 22/11 11:35 (postId a69bd045) – creata slot 11:00: video/tappeto_parte1.mp4 – CTA "MOLLA". Gino salta sempre più in alto (molle da camion, due tappeti impilati); Mario prova, fa un salto solo e sparisce sopra le nuvole.
 - Parte 2 PUBBLICATA 22/11 14:15 (postId c56e9c30) – creata slot 14:00: video/tappeto_parte2.mp4 – CTA "NUVOLA". Mario sta in piedi su una nuvola; Gino con 3 tappeti arriva lassù, gli tende la mano, ricade; la nuvola di Mario se ne va verso il mare (scene15.html: uCloud, uTramp2=n strati extra).
-- Parte 3 FINALE creata 22/11 (slot 17:00): video/tappeto_parte3.mp4 – la nuvola piove, Mario scivola giù, Gino sposta i tappeti, 3 rimbalzi, Mario atterra tra le braccia di Gino, tappeto chiuso in garage. FINE (anim16.js su scene15.html). YouTube: dopo le 09:00 del 23/11 (limite).
+- Parte 3 FINALE creata 22/11 (slot 17:00): video/tappeto_parte3.mp4 – la nuvola piove, Mario scivola giù, Gino sposta i tappeti, 3 rimbalzi, Mario atterra tra le braccia di Gino, tappeto chiuso in garage. FINE (anim16.js su scene15.html). PUBBLICATA 22/11 17:13 su TikTok+Instagram (postId 96eb57ab); YouTube programmato 23/11 09:05. SERIE CONCLUSA.
 - Scena: scene14.html (uTramp, uTramp2, uTrampDip) + anim14.js. Sorgenti copiati anche in src/ del repo.
 
 ## Prossima
