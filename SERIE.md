@@ -22,10 +22,10 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Scena: scene14.html (uTramp, uTramp2, uTrampDip) + anim14.js. Sorgenti copiati anche in src/ del repo.
 
 ## PUPAZZO DI NEVE (in corso) – "Il pupazzo di neve in giardino"
-- Parte 1 creata 22/11 (slot 19:00): video/pupazzo_parte1.mp4 – CTA "NEVE". Il pupazzo si sposta ogni giorno verso casa di Gino, Mario giura che non è stato lui, di notte gira la testa, il pupazzo piccolo sparisce e il grande sorride.
+- Parte 1 PUBBLICATA 22/11 19:18 TT+IG (postId 26af3de2), YouTube programmato 23/11 09:07 – creata slot 19:00: video/pupazzo_parte1.mp4 – CTA "NEVE". Il pupazzo si sposta ogni giorno verso casa di Gino, Mario giura che non è stato lui, di notte gira la testa, il pupazzo piccolo sparisce e il grande sorride.
 - Parte 2 il 23/11 alle 11:00, parte 3 FINALE alle 14:00.
 - Scena: scene16.html (snowman(): uSnow/uSnow2, uSnowRot, uSnowSmile, uSnowG neve a terra, uPType 3 fiocchi) + anim17.js.
 
 ## Prossima
 23/11 11:00 → PUPAZZO parte 2. 14:00 → PUPAZZO parte 3 (finale). 17:00 → nuova serie.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11: 09:05 tappeto finale (1 usato).
+Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11: 09:05 tappeto finale + 09:07 pupazzo p1 (2 usati, ne resta 1).
