@@ -15,12 +15,12 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 21/11 (slot 19:00): video/catapulta_parte3.mp4 – guerra di catapulte, i due bidoni si scontrano a metà strada e distruggono entrambe le catapulte, pace e pomodori alla griglia, FINE (scene13.html/anim13.js, due catapulte uCat/uCat2). PUBBLICATA 21/11 19:22 su TikTok+Instagram (postId 523612cb); YouTube pubblicato 22/11 09:06 (limite 3 upload YouTube/giorno vidIQ free: oggi ne restano 2). SERIE CONCLUSA., parte 3 FINALE alle 19:00 (chiude con "FINE – Seguici per la prossima storia").
 - Scena: /tmp/claude-0/r3d/scene11.html + anim11.js
 
-## TAPPETO ELASTICO (in corso) – "Il tappeto elastico in giardino"
+## TAPPETO ELASTICO (conclusa) – "Il tappeto elastico in giardino"
 - Parte 1 PUBBLICATA 22/11 11:35 (postId a69bd045) – creata slot 11:00: video/tappeto_parte1.mp4 – CTA "MOLLA". Gino salta sempre più in alto (molle da camion, due tappeti impilati); Mario prova, fa un salto solo e sparisce sopra le nuvole.
 - Parte 2 PUBBLICATA 22/11 14:15 (postId c56e9c30) – creata slot 14:00: video/tappeto_parte2.mp4 – CTA "NUVOLA". Mario sta in piedi su una nuvola; Gino con 3 tappeti arriva lassù, gli tende la mano, ricade; la nuvola di Mario se ne va verso il mare (scene15.html: uCloud, uTramp2=n strati extra).
-- Parte 3 FINALE alle 17:00 (come torna giù Mario?).
+- Parte 3 FINALE creata 22/11 (slot 17:00): video/tappeto_parte3.mp4 – la nuvola piove, Mario scivola giù, Gino sposta i tappeti, 3 rimbalzi, Mario atterra tra le braccia di Gino, tappeto chiuso in garage. FINE (anim16.js su scene15.html). YouTube: dopo le 09:00 del 23/11 (limite).
 - Scena: scene14.html (uTramp, uTramp2, uTrampDip) + anim14.js. Sorgenti copiati anche in src/ del repo.
 
 ## Prossima
-17:00 → TAPPETO parte 3 (finale). 19:00 → nuova serie parte 1.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). Il 22/11 sono esauriti (3/3): parte 3 su YouTube il 23/11 dopo le 09:00.
+Dopo la pubblicazione del finale TAPPETO tutte le serie sono chiuse: 22/11 19:00 → NUOVA serie parte 1; 23/11 11:00 parte 2, 14:00 parte 3 finale (poi nuova serie alle 17).
+Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 22/11 esaurito.
