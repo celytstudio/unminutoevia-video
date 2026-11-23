@@ -27,12 +27,18 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 23/11 (slot 14:00): video/pupazzo_parte3.mp4 – Gino toglie la carota, il pupazzo starnutisce, cade la testa: dentro c'è Mario (vendetta per il tappeto elastico); i 10 pupazzi erano il suo esercito per la battaglia a palle di neve; cioccolata calda offerta da Mario. FINE (scene18.html: uSnowHead, uBall/uBall2; anim19.js). YouTube: 24/11 dopo le 09:00.
 - Scena: scene16.html (snowman(): uSnow/uSnow2, uSnowRot, uSnowSmile, uSnowG neve a terra, uPType 3 fiocchi) + anim17.js.
 
-## PISCINA (in prova – GRAFICA V2) – "La piscina in giardino"
+## PISCINA (in corso – GRAFICA V2.1 APPROVATA) – "La piscina in giardino"
 - Parte 1 creata 23/11 15:xx su richiesta dell'utente come TEST di grafica leggermente più elaborata (scene19.html: cielo con sole/orizzonte caldo, prato a strisce con fiorellini, cespugli fioriti lungo la recinzione, luce più morbida e pelle con subsurface, tonemap ACES, acqua trasparente con riflessi, bloom leggero nel compose). Video: video/piscina_parte1.mp4 – CTA "PISCINA". Mario si è trasferito nella piscina, chi si tuffa paga l'affitto.
 - 23/11 15:38 l'utente ha chiesto di migliorarla ancora: GRAFICA V2.1 = scene20.html (render 720x1280, nuvole nel cielo, bordo piscina in pietra, caustiche sul fondo, sheen su pelle/plastica, split toning caldo/freddo) + anim21.js con inquadrature che tengono Gino in campo. Render ~26 min. video/piscina_parte1.mp4 sostituito con la V2.1.
-- IN ATTESA: l'utente deve dire se la grafica V2 gli piace. Se SÌ → usare scene20.html come base per tutti i prossimi video. Se NO → tornare alla grafica precedente (scene18.html e precedenti).
+- 23/11 16:35 l'utente ha APPROVATO la grafica V2.1: da ora TUTTI i video usano scene20.html (720x1280) + anim21.js come base.
+- Parte 2 nello slot delle 17 (inizio 16:40), parte 3 FINALE slot 19 (inizio 18:20).
 - Nota: il finale PUPAZZO (video/pupazzo_parte3.mp4) è pronto ma non ancora pubblicato.
 
 ## Prossima
 Dopo la pubblicazione del finale PUPAZZO tutte le serie sono chiuse: 23/11 17:00 → NUOVA serie parte 1; 19:00 parte 2; 24/11 11:00 parte 3 finale.
 Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11 esauriti (3/3).
+
+## TEMPI DI PRODUZIONE (per anticipare l'inizio, richiesta utente 23/11)
+L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
+- Grafica V2.1: script+voci+keyframe ~10 min, render ~26 min (1577 s per 38 s di video), mux+QA+push ~3 min → ~40 min totali.
+- Inizio attuale: 40 min prima dello slot (10:20, 13:20, 16:20, 18:20). Annotare qui i tempi reali di ogni video e regolare l'anticipo.
