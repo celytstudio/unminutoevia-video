@@ -29,7 +29,8 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 
 ## PISCINA (in prova – GRAFICA V2) – "La piscina in giardino"
 - Parte 1 creata 23/11 15:xx su richiesta dell'utente come TEST di grafica leggermente più elaborata (scene19.html: cielo con sole/orizzonte caldo, prato a strisce con fiorellini, cespugli fioriti lungo la recinzione, luce più morbida e pelle con subsurface, tonemap ACES, acqua trasparente con riflessi, bloom leggero nel compose). Video: video/piscina_parte1.mp4 – CTA "PISCINA". Mario si è trasferito nella piscina, chi si tuffa paga l'affitto.
-- IN ATTESA: l'utente deve dire se la grafica V2 gli piace. Se SÌ → usare scene19.html come base per tutti i prossimi video. Se NO → tornare alla grafica precedente (scene18.html e precedenti).
+- 23/11 15:38 l'utente ha chiesto di migliorarla ancora: GRAFICA V2.1 = scene20.html (render 720x1280, nuvole nel cielo, bordo piscina in pietra, caustiche sul fondo, sheen su pelle/plastica, split toning caldo/freddo) + anim21.js con inquadrature che tengono Gino in campo. Render ~26 min. video/piscina_parte1.mp4 sostituito con la V2.1.
+- IN ATTESA: l'utente deve dire se la grafica V2 gli piace. Se SÌ → usare scene20.html come base per tutti i prossimi video. Se NO → tornare alla grafica precedente (scene18.html e precedenti).
 - Nota: il finale PUPAZZO (video/pupazzo_parte3.mp4) è pronto ma non ancora pubblicato.
 
 ## Prossima
