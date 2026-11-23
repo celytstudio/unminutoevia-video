@@ -27,6 +27,11 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 23/11 (slot 14:00): video/pupazzo_parte3.mp4 – Gino toglie la carota, il pupazzo starnutisce, cade la testa: dentro c'è Mario (vendetta per il tappeto elastico); i 10 pupazzi erano il suo esercito per la battaglia a palle di neve; cioccolata calda offerta da Mario. FINE (scene18.html: uSnowHead, uBall/uBall2; anim19.js). YouTube: 24/11 dopo le 09:00.
 - Scena: scene16.html (snowman(): uSnow/uSnow2, uSnowRot, uSnowSmile, uSnowG neve a terra, uPType 3 fiocchi) + anim17.js.
 
+## PISCINA (in prova – GRAFICA V2) – "La piscina in giardino"
+- Parte 1 creata 23/11 15:xx su richiesta dell'utente come TEST di grafica leggermente più elaborata (scene19.html: cielo con sole/orizzonte caldo, prato a strisce con fiorellini, cespugli fioriti lungo la recinzione, luce più morbida e pelle con subsurface, tonemap ACES, acqua trasparente con riflessi, bloom leggero nel compose). Video: video/piscina_parte1.mp4 – CTA "PISCINA". Mario si è trasferito nella piscina, chi si tuffa paga l'affitto.
+- IN ATTESA: l'utente deve dire se la grafica V2 gli piace. Se SÌ → usare scene19.html come base per tutti i prossimi video. Se NO → tornare alla grafica precedente (scene18.html e precedenti).
+- Nota: il finale PUPAZZO (video/pupazzo_parte3.mp4) è pronto ma non ancora pubblicato.
+
 ## Prossima
 Dopo la pubblicazione del finale PUPAZZO tutte le serie sono chiuse: 23/11 17:00 → NUOVA serie parte 1; 19:00 parte 2; 24/11 11:00 parte 3 finale.
 Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11 esauriti (3/3).
