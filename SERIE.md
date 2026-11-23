@@ -21,12 +21,12 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 22/11 (slot 17:00): video/tappeto_parte3.mp4 – la nuvola piove, Mario scivola giù, Gino sposta i tappeti, 3 rimbalzi, Mario atterra tra le braccia di Gino, tappeto chiuso in garage. FINE (anim16.js su scene15.html). PUBBLICATA 22/11 17:13 su TikTok+Instagram (postId 96eb57ab); YouTube pubblicato 23/11 09:06. SERIE CONCLUSA.
 - Scena: scene14.html (uTramp, uTramp2, uTrampDip) + anim14.js. Sorgenti copiati anche in src/ del repo.
 
-## PUPAZZO DI NEVE (in corso) – "Il pupazzo di neve in giardino"
+## PUPAZZO DI NEVE (conclusa) – "Il pupazzo di neve in giardino"
 - Parte 1 PUBBLICATA 22/11 19:18 TT+IG (postId 26af3de2), YouTube pubblicato 23/11 09:08 – creata slot 19:00: video/pupazzo_parte1.mp4 – CTA "NEVE". Il pupazzo si sposta ogni giorno verso casa di Gino, Mario giura che non è stato lui, di notte gira la testa, il pupazzo piccolo sparisce e il grande sorride.
 - Parte 2 PUBBLICATA 23/11 11:22 (postId f1d12358) – creata slot 11:00: video/pupazzo_parte2.mp4 – CTA "CAROTA". Gino lo spia di notte, alle 3 il pupazzo scivola nel giardino di Mario; lì il pupazzo piccolo e altri dieci pupazzi girati verso casa di Gino che sorridono (scene17.html: uArmy, uArmyRot).
-- Parte 3 FINALE alle 14:00 (chi li ha fatti? Mario?).
+- Parte 3 FINALE creata 23/11 (slot 14:00): video/pupazzo_parte3.mp4 – Gino toglie la carota, il pupazzo starnutisce, cade la testa: dentro c'è Mario (vendetta per il tappeto elastico); i 10 pupazzi erano il suo esercito per la battaglia a palle di neve; cioccolata calda offerta da Mario. FINE (scene18.html: uSnowHead, uBall/uBall2; anim19.js). YouTube: 24/11 dopo le 09:00.
 - Scena: scene16.html (snowman(): uSnow/uSnow2, uSnowRot, uSnowSmile, uSnowG neve a terra, uPType 3 fiocchi) + anim17.js.
 
 ## Prossima
-14:00 → PUPAZZO parte 3 (finale). 17:00 → nuova serie.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11: 09:05 tappeto finale + 09:07 pupazzo p1 + pupazzo p2 11:22 (3/3 esauriti).
+Dopo la pubblicazione del finale PUPAZZO tutte le serie sono chiuse: 23/11 17:00 → NUOVA serie parte 1; 19:00 parte 2; 24/11 11:00 parte 3 finale.
+Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11 esauriti (3/3).
