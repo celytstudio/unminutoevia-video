@@ -27,20 +27,21 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 23/11 (slot 14:00): video/pupazzo_parte3.mp4 – Gino toglie la carota, il pupazzo starnutisce, cade la testa: dentro c'è Mario (vendetta per il tappeto elastico); i 10 pupazzi erano il suo esercito per la battaglia a palle di neve; cioccolata calda offerta da Mario. FINE (scene18.html: uSnowHead, uBall/uBall2; anim19.js). YouTube: 24/11 dopo le 09:00.
 - Scena: scene16.html (snowman(): uSnow/uSnow2, uSnowRot, uSnowSmile, uSnowG neve a terra, uPType 3 fiocchi) + anim17.js.
 
-## PISCINA (in corso – GRAFICA V2.1 APPROVATA) – "La piscina in giardino"
+## PISCINA (conclusa – GRAFICA V2.1 APPROVATA) – "La piscina in giardino"
 - Parte 1 creata 23/11 15:xx su richiesta dell'utente come TEST di grafica leggermente più elaborata (scene19.html: cielo con sole/orizzonte caldo, prato a strisce con fiorellini, cespugli fioriti lungo la recinzione, luce più morbida e pelle con subsurface, tonemap ACES, acqua trasparente con riflessi, bloom leggero nel compose). Video: video/piscina_parte1.mp4 – CTA "PISCINA". Mario si è trasferito nella piscina, chi si tuffa paga l'affitto.
 - 23/11 15:38 l'utente ha chiesto di migliorarla ancora: GRAFICA V2.1 = scene20.html (render 720x1280, nuvole nel cielo, bordo piscina in pietra, caustiche sul fondo, sheen su pelle/plastica, split toning caldo/freddo) + anim21.js con inquadrature che tengono Gino in campo. Render ~26 min. video/piscina_parte1.mp4 sostituito con la V2.1.
 - 23/11 16:35 l'utente ha APPROVATO la grafica V2.1: da ora TUTTI i video usano scene20.html (720x1280) + anim21.js come base.
 - Parte 2 creata 23/11 slot 17 (iniziata 16:40, pronta 17:10): video/piscina_parte2.mp4 – CTA "PORTELLONE". Mario arreda la piscina (divano, lampada accesa sott'acqua, cassetta delle lettere), il livello dell'acqua sale, di notte luce verde: sul fondo un portellone e Mario ci entra (scene21.html: uFurn, uHatchY; anim22.js).
-- Parte 3 FINALE slot 19 (inizio 18:20): cosa c'è sotto il portellone?
+- Parte 3 FINALE creata 23/11 slot 19 (iniziata 18:20, pronta 18:55): video/piscina_parte3.mp4 – Gino apre il portellone, luce e musica, Mario esce con una torta: festa a sorpresa per l'inaugurazione; l'affitto lo paga Gino in pizza. FINE (scene22.html: uHatchOpen, uParty luci, uCake; anim23.js).
 - 23/11 17:46 pubblicazioni (TT+IG): Pupazzo finale subito (postId ccafe90e); Piscina p1 programmata 18:50 (postId 19c5a96d); Piscina p2 programmata 19:55 (postId 5dda5953). YouTube di tutti e 3 programmato con send_later il 24/11 alle 09:05.
 
 ## Prossima
-Dopo la pubblicazione del finale PUPAZZO tutte le serie sono chiuse: 23/11 17:00 → NUOVA serie parte 1; 19:00 parte 2; 24/11 11:00 parte 3 finale.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 23/11 esauriti (3/3).
+Dopo la PISCINA tutte le serie sono chiuse: 24/11 11:00 (inizio 10:25) → NUOVA serie parte 1 con grafica V2.1, 14:00 parte 2, 17:00 parte 3 finale, 19:00 nuova serie.
+Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 24/11: 09:05 pubblica su YouTube pupazzo finale + piscina p1 + p2 (3/3) → i video del 24/11 su YouTube il 25/11.
 
 ## TEMPI DI PRODUZIONE (per anticipare l'inizio, richiesta utente 23/11)
 L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - Grafica V2.1: script+voci+keyframe ~10 min, render ~26 min (1577 s per 38 s di video), mux+QA+push ~3 min → ~40 min totali.
 - Misurato 23/11 piscina p2: 16:40 → 17:10 (30 min; render 1501 s per 35.6 s).
-- Inizio attuale: 40 min prima dello slot (10:20, 13:20, 16:20, 18:20). Annotare qui i tempi reali di ogni video e regolare l'anticipo.
+- Misurato 23/11 piscina p3 (notte, luci): 18:20 → 18:55 (35 min; render 1778 s per 31.8 s).
+- Inizio dal 24/11: 35 min prima (10:25, 13:25, 16:25, 18:25). Prima: 40 min prima dello slot (10:20, 13:20, 16:20, 18:20). Annotare qui i tempi reali di ogni video e regolare l'anticipo.
