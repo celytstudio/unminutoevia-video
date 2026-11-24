@@ -37,7 +37,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 
 ## Prossima
 Dopo la PISCINA tutte le serie sono chiuse: 24/11 11:00 (inizio 10:25) → NUOVA serie parte 1 con grafica V2.1, 14:00 parte 2, 17:00 parte 3 finale, 19:00 nuova serie.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 24/11: 09:05 pubblica su YouTube pupazzo finale + piscina p1 + p2 (3/3) → i video del 24/11 su YouTube il 25/11.
+Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 24/11: 09:07 PUBBLICATI su YouTube pupazzo finale + piscina p1 + p2 (3/3 esauriti) → i video del 24/11 su YouTube dal 25/11 (25/11 09:05: prima piscina finale, poi max 2 del 24/11).
 
 ## TEMPI DI PRODUZIONE (per anticipare l'inizio, richiesta utente 23/11)
 L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
