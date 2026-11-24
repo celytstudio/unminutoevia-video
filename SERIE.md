@@ -35,13 +35,19 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 23/11 slot 19 (iniziata 18:20, pronta 18:55): video/piscina_parte3.mp4 – Gino apre il portellone, luce e musica, Mario esce con una torta: festa a sorpresa per l'inaugurazione; l'affitto lo paga Gino in pizza. FINE (scene22.html: uHatchOpen, uParty luci, uCake; anim23.js). PUBBLICATA TT+IG programmata 23/11 20:56 (postId a86c319b); YouTube programmato 25/11 09:05.
 - 23/11 17:46 pubblicazioni (TT+IG): Pupazzo finale subito (postId ccafe90e); Piscina p1 programmata 18:50 (postId 19c5a96d); Piscina p2 programmata 19:55 (postId 5dda5953). YouTube di tutti e 3 programmato con send_later il 24/11 alle 09:05.
 
+## ZUCCA (in corso – grafica V2.1) – "La zucca gigante"
+- 24/11: i promemoria delle 10:25/13:25/16:25 sono arrivati tutti alle 17:21 (sessione ferma) → nessun video prodotto in mattinata/pomeriggio.
+- Parte 1 creata 24/11 (iniziata 17:22, pronta 17:50): video/zucca_parte1.mp4 – CTA "ZUCCA". Seme, piantina, concime verde di Mario che brilla, la zucca diventa più grande di una macchina e del tetto di Mario; dentro qualcosa bussa (scene23.html: uPump, uSprout; anim24.js).
+- Parte 2 slot 19 (inizio 18:25), parte 3 FINALE 25/11 slot 11.
+
 ## Prossima
-Dopo la PISCINA tutte le serie sono chiuse: 24/11 11:00 (inizio 10:25) → NUOVA serie parte 1 con grafica V2.1, 14:00 parte 2, 17:00 parte 3 finale, 19:00 nuova serie.
-Nota: vidIQ gratis = max 3 upload YouTube al giorno (reset 09:00 Italia). 24/11: 09:07 PUBBLICATI su YouTube pupazzo finale + piscina p1 + p2 (3/3 esauriti) → i video del 24/11 su YouTube dal 25/11 (25/11 09:05: prima piscina finale, poi max 2 del 24/11).
+24/11 19:00 (inizio 18:25) → ZUCCA parte 2. 25/11 11:00 (inizio 10:25) → ZUCCA parte 3 finale.
+Nota YouTube: 25/11 09:05 prima piscina finale, poi max 2 arretrati (zucca p1, p2).
 
 ## TEMPI DI PRODUZIONE (per anticipare l'inizio, richiesta utente 23/11)
 L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - Grafica V2.1: script+voci+keyframe ~10 min, render ~26 min (1577 s per 38 s di video), mux+QA+push ~3 min → ~40 min totali.
 - Misurato 23/11 piscina p2: 16:40 → 17:10 (30 min; render 1501 s per 35.6 s).
 - Misurato 23/11 piscina p3 (notte, luci): 18:20 → 18:55 (35 min; render 1778 s per 31.8 s).
+- Misurato 24/11 zucca p1: 17:22 → 17:50 (28 min; render 1474 s per 36.2 s).
 - Inizio dal 24/11: 35 min prima (10:25, 13:25, 16:25, 18:25). Prima: 40 min prima dello slot (10:20, 13:20, 16:20, 18:20). Annotare qui i tempi reali di ogni video e regolare l'anticipo.
