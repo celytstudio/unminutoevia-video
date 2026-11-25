@@ -38,7 +38,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 ## ZUCCA (in corso – grafica V2.1) – "La zucca gigante"
 - 24/11: i promemoria delle 10:25/13:25/16:25 sono arrivati tutti alle 17:21 (sessione ferma) → nessun video prodotto in mattinata/pomeriggio.
 - Parte 1 creata 24/11 (iniziata 17:22, pronta 17:50): video/zucca_parte1.mp4 – CTA "ZUCCA". Seme, piantina, concime verde di Mario che brilla, la zucca diventa più grande di una macchina e del tetto di Mario; dentro qualcosa bussa (scene23.html: uPump, uSprout; anim24.js).
-- Parte 1 PUBBLICATA TT+IG 24/11 18:32 (postId ac7c8d62); YouTube programmato 25/11 09:08.
+- Parte 1 PUBBLICATA TT+IG 24/11 18:32 (postId ac7c8d62); YouTube pubblicato 25/11 09:09.
 - Parte 2 PUBBLICATA TT+IG programmata 24/11 19:36 (postId fac2db98), YouTube 25/11 09:11 – creata 24/11 (iniziata 18:30, pronta 19:05): video/zucca_parte2.mp4 – CTA "SEMI". Gino intaglia una porta rotonda, dentro buio e toc toc, escono cento zucchine che rotolano via, il giorno dopo il giardino è pieno di zucche che crescono (scene24.html: uPDoor, uMini/uMiniT; anim25.js).
 - Parte 3 FINALE 25/11 slot 11 (inizio 10:25).
 
