@@ -40,7 +40,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 1 creata 24/11 (iniziata 17:22, pronta 17:50): video/zucca_parte1.mp4 – CTA "ZUCCA". Seme, piantina, concime verde di Mario che brilla, la zucca diventa più grande di una macchina e del tetto di Mario; dentro qualcosa bussa (scene23.html: uPump, uSprout; anim24.js).
 - Parte 1 PUBBLICATA TT+IG 24/11 18:32 (postId ac7c8d62); YouTube pubblicato 25/11 09:09.
 - Parte 2 PUBBLICATA TT+IG programmata 24/11 19:36 (postId fac2db98), YouTube pubblicato 25/11 09:12 – creata 24/11 (iniziata 18:30, pronta 19:05): video/zucca_parte2.mp4 – CTA "SEMI". Gino intaglia una porta rotonda, dentro buio e toc toc, escono cento zucchine che rotolano via, il giorno dopo il giardino è pieno di zucche che crescono (scene24.html: uPDoor, uMini/uMiniT; anim25.js).
-- Parte 3 FINALE creata 25/11 slot 11 (iniziata 10:26, pronta 11:02): video/zucca_parte3.mp4 – Mario col coltello più grande, intagliano una faccia, regalano le zucchine al quartiere, di notte la lanterna gigante si vede da tutta la città e fa l'occhiolino. FINE (scene25.html: uFace, uLantern, uWink; anim26.js).
+- Parte 3 FINALE creata 25/11 slot 11 (iniziata 10:26, pronta 11:02): video/zucca_parte3.mp4 – Mario col coltello più grande, intagliano una faccia, regalano le zucchine al quartiere, di notte la lanterna gigante si vede da tutta la città e fa l'occhiolino. FINE (scene25.html: uFace, uLantern, uWink; anim26.js). PUBBLICATA TT+IG 25/11 11:03 (postId ceeda684); YouTube programmato 26/11 09:05.
 
 ## Prossima
 Tutte le serie chiuse: 25/11 14:00 (inizio 13:25) → NUOVA serie parte 1 (grafica V2.1), 17:00 parte 2, 19:00 parte 3 finale.
