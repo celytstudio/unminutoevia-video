@@ -35,16 +35,16 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 23/11 slot 19 (iniziata 18:20, pronta 18:55): video/piscina_parte3.mp4 – Gino apre il portellone, luce e musica, Mario esce con una torta: festa a sorpresa per l'inaugurazione; l'affitto lo paga Gino in pizza. FINE (scene22.html: uHatchOpen, uParty luci, uCake; anim23.js). PUBBLICATA TT+IG programmata 23/11 20:56 (postId a86c319b); YouTube pubblicato 25/11 09:06.
 - 23/11 17:46 pubblicazioni (TT+IG): Pupazzo finale subito (postId ccafe90e); Piscina p1 programmata 18:50 (postId 19c5a96d); Piscina p2 programmata 19:55 (postId 5dda5953). YouTube di tutti e 3 programmato con send_later il 24/11 alle 09:05.
 
-## ZUCCA (in corso – grafica V2.1) – "La zucca gigante"
+## ZUCCA (conclusa – grafica V2.1) – "La zucca gigante"
 - 24/11: i promemoria delle 10:25/13:25/16:25 sono arrivati tutti alle 17:21 (sessione ferma) → nessun video prodotto in mattinata/pomeriggio.
 - Parte 1 creata 24/11 (iniziata 17:22, pronta 17:50): video/zucca_parte1.mp4 – CTA "ZUCCA". Seme, piantina, concime verde di Mario che brilla, la zucca diventa più grande di una macchina e del tetto di Mario; dentro qualcosa bussa (scene23.html: uPump, uSprout; anim24.js).
 - Parte 1 PUBBLICATA TT+IG 24/11 18:32 (postId ac7c8d62); YouTube pubblicato 25/11 09:09.
 - Parte 2 PUBBLICATA TT+IG programmata 24/11 19:36 (postId fac2db98), YouTube pubblicato 25/11 09:12 – creata 24/11 (iniziata 18:30, pronta 19:05): video/zucca_parte2.mp4 – CTA "SEMI". Gino intaglia una porta rotonda, dentro buio e toc toc, escono cento zucchine che rotolano via, il giorno dopo il giardino è pieno di zucche che crescono (scene24.html: uPDoor, uMini/uMiniT; anim25.js).
-- Parte 3 FINALE 25/11 slot 11 (inizio 10:25).
+- Parte 3 FINALE creata 25/11 slot 11 (iniziata 10:26, pronta 11:02): video/zucca_parte3.mp4 – Mario col coltello più grande, intagliano una faccia, regalano le zucchine al quartiere, di notte la lanterna gigante si vede da tutta la città e fa l'occhiolino. FINE (scene25.html: uFace, uLantern, uWink; anim26.js).
 
 ## Prossima
-25/11 11:00 (inizio 10:25) → ZUCCA parte 3 finale.
-Nota YouTube: 25/11 usati 3/3 (piscina finale, zucca p1, p2) → zucca finale e video successivi su YouTube dal 26/11 09:05.
+Tutte le serie chiuse: 25/11 14:00 (inizio 13:25) → NUOVA serie parte 1 (grafica V2.1), 17:00 parte 2, 19:00 parte 3 finale.
+Nota YouTube: 25/11 3/3 usati → zucca finale e successivi su YouTube dal 26/11 09:05.
 
 ## TEMPI DI PRODUZIONE (per anticipare l'inizio, richiesta utente 23/11)
 L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
@@ -52,4 +52,5 @@ L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - Misurato 23/11 piscina p2: 16:40 → 17:10 (30 min; render 1501 s per 35.6 s).
 - Misurato 23/11 piscina p3 (notte, luci): 18:20 → 18:55 (35 min; render 1778 s per 31.8 s).
 - Misurato 24/11 zucca p1: 17:22 → 17:50 (28 min; render 1474 s per 36.2 s).
+- Misurato 25/11 zucca finale (notte+lanterna): 10:26 → 11:02 (36 min; render 1960 s per 34.4 s). Scene di notte più lente: per finali notturni iniziare 40 min prima.
 - Inizio dal 24/11: 35 min prima (10:25, 13:25, 16:25, 18:25). Prima: 40 min prima dello slot (10:20, 13:20, 16:20, 18:20). Annotare qui i tempi reali di ogni video e regolare l'anticipo.
