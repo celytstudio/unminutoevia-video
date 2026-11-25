@@ -43,8 +43,8 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 25/11 slot 11 (iniziata 10:26, pronta 11:02): video/zucca_parte3.mp4 – Mario col coltello più grande, intagliano una faccia, regalano le zucchine al quartiere, di notte la lanterna gigante si vede da tutta la città e fa l'occhiolino. FINE (scene25.html: uFace, uLantern, uWink; anim26.js). PUBBLICATA TT+IG 25/11 11:03 (postId ceeda684); YouTube programmato 26/11 09:05.
 
 ## Prossima
-Tutte le serie chiuse: 25/11 14:00 (inizio 13:25) → NUOVA serie parte 1 (grafica V2.1), 17:00 parte 2, 19:00 parte 3 finale.
-Nota YouTube: 25/11 3/3 usati → zucca finale e successivi su YouTube dal 26/11 09:05.
+NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
+Per recuperare: 25/11 nessun altro video dopo la Zucca; 26/11 09:05 Zucca finale su YouTube, poi solo 2 video (slot 15 e 19: NUOVA serie parte 1 e 2) pubblicati subito anche su YouTube; dal 27/11 3 video al giorno (11, 15, 19) tutti subito anche su YouTube.
 
 ## TEMPI DI PRODUZIONE (per anticipare l'inizio, richiesta utente 23/11)
 L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
