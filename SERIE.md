@@ -44,7 +44,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 
 ## MONGOLFIERA (in corso – grafica V2.1) – "La mongolfiera in giardino"
 - Parte 1 creata 26/11 slot 15 (iniziata 14:26, pronta 14:58): video/mongolfiera_parte1.mp4 – CTA "VOLA". Cesto della biancheria + accappatoio di Mario come pallone; Mario esce senza accappatoio, afferra la corda e il vento li porta via (scene26.html: uBal, uInflate, uFireB; anim27.js). L'utente aveva già detto "caricalo" alle 14:25 → PUBBLICATA subito 26/11 15:00 su TT+IG+YT (postId 328eb8b2). YouTube 26/11: 2/3 usati.
-- Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 27/11 slot 11.
+- Parte 2 PUBBLICATA 26/11 18:56 su TT+IG+YT (postId 1e00121a, YT su2QUgZFZHU) – creata slot 19 (iniziata 18:20, pronta 18:55): video/mongolfiera_parte2.mp4 – CTA "FUOCO". Freddo sopra le nuvole, Mario sale nel cesto, notte, il fuoco fa PUF, cadono verso la piscina di Mario (scene26.html, anim28.js). YouTube 26/11: 3/3 usati. Parte 3 FINALE 27/11 slot 11.
 
 ## Prossima
 NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
