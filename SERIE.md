@@ -42,6 +42,10 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 2 PUBBLICATA TT+IG programmata 24/11 19:36 (postId fac2db98), YouTube pubblicato 25/11 09:12 – creata 24/11 (iniziata 18:30, pronta 19:05): video/zucca_parte2.mp4 – CTA "SEMI". Gino intaglia una porta rotonda, dentro buio e toc toc, escono cento zucchine che rotolano via, il giorno dopo il giardino è pieno di zucche che crescono (scene24.html: uPDoor, uMini/uMiniT; anim25.js).
 - Parte 3 FINALE creata 25/11 slot 11 (iniziata 10:26, pronta 11:02): video/zucca_parte3.mp4 – Mario col coltello più grande, intagliano una faccia, regalano le zucchine al quartiere, di notte la lanterna gigante si vede da tutta la città e fa l'occhiolino. FINE (scene25.html: uFace, uLantern, uWink; anim26.js). PUBBLICATA TT+IG 25/11 11:03 (postId ceeda684); YouTube pubblicato 26/11 09:06. Ora YouTube è IN PARI.
 
+## MONGOLFIERA (in corso – grafica V2.1) – "La mongolfiera in giardino"
+- Parte 1 creata 26/11 slot 15 (iniziata 14:26, pronta 14:58): video/mongolfiera_parte1.mp4 – CTA "VOLA". Cesto della biancheria + accappatoio di Mario come pallone; Mario esce senza accappatoio, afferra la corda e il vento li porta via (scene26.html: uBal, uInflate, uFireB; anim27.js). L'utente aveva già detto "caricalo" alle 14:25 → pubblicata subito.
+- Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 27/11 slot 11.
+
 ## Prossima
 NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
 Per recuperare: 25/11 nessun altro video dopo la Zucca; 26/11 09:05 Zucca finale su YouTube, poi solo 2 video (slot 15 e 19: NUOVA serie parte 1 e 2) pubblicati subito anche su YouTube; dal 27/11 3 video al giorno (11, 15, 19) tutti subito anche su YouTube.
