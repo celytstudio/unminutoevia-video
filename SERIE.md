@@ -43,7 +43,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 25/11 slot 11 (iniziata 10:26, pronta 11:02): video/zucca_parte3.mp4 – Mario col coltello più grande, intagliano una faccia, regalano le zucchine al quartiere, di notte la lanterna gigante si vede da tutta la città e fa l'occhiolino. FINE (scene25.html: uFace, uLantern, uWink; anim26.js). PUBBLICATA TT+IG 25/11 11:03 (postId ceeda684); YouTube pubblicato 26/11 09:06. Ora YouTube è IN PARI.
 
 ## MONGOLFIERA (in corso – grafica V2.1) – "La mongolfiera in giardino"
-- Parte 1 creata 26/11 slot 15 (iniziata 14:26, pronta 14:58): video/mongolfiera_parte1.mp4 – CTA "VOLA". Cesto della biancheria + accappatoio di Mario come pallone; Mario esce senza accappatoio, afferra la corda e il vento li porta via (scene26.html: uBal, uInflate, uFireB; anim27.js). L'utente aveva già detto "caricalo" alle 14:25 → pubblicata subito.
+- Parte 1 creata 26/11 slot 15 (iniziata 14:26, pronta 14:58): video/mongolfiera_parte1.mp4 – CTA "VOLA". Cesto della biancheria + accappatoio di Mario come pallone; Mario esce senza accappatoio, afferra la corda e il vento li porta via (scene26.html: uBal, uInflate, uFireB; anim27.js). L'utente aveva già detto "caricalo" alle 14:25 → PUBBLICATA subito 26/11 15:00 su TT+IG+YT (postId 328eb8b2). YouTube 26/11: 2/3 usati.
 - Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 27/11 slot 11.
 
 ## Prossima
