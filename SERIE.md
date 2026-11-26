@@ -58,3 +58,5 @@ L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - Misurato 24/11 zucca p1: 17:22 → 17:50 (28 min; render 1474 s per 36.2 s).
 - Misurato 25/11 zucca finale (notte+lanterna): 10:26 → 11:02 (36 min; render 1960 s per 34.4 s). Scene di notte più lente: per finali notturni iniziare 40 min prima.
 - Inizio dal 24/11: 35 min prima (10:25, 13:25, 16:25, 18:25). Prima: 40 min prima dello slot (10:20, 13:20, 16:20, 18:20). Annotare qui i tempi reali di ogni video e regolare l'anticipo.
+
+- 26/11 mongolfiera p2 (notte, anim28): avvio 18:20, render 1768s, pronto ~18:55.
