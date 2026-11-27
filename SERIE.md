@@ -47,6 +47,10 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 2 PUBBLICATA 26/11 18:56 su TT+IG+YT (postId 1e00121a, YT su2QUgZFZHU) – creata slot 19 (iniziata 18:20, pronta 18:55): video/mongolfiera_parte2.mp4 – CTA "FUOCO". Freddo sopra le nuvole, Mario sale nel cesto, notte, il fuoco fa PUF, cadono verso la piscina di Mario (scene26.html, anim28.js). YouTube 26/11: 3/3 usati. Parte 3 FINALE 27/11 slot 11.
 - Parte 3 FINALE creata 27/11 slot 11 (iniziata 10:25, pronta ~11:00): video/mongolfiera_parte3.mp4 – SPLASH nella piscina di Mario, il pallone si sgonfia, la mattina dopo Mario si riprende l'accappatoio, lo strizza e se lo rimette bagnato; Gino resta nel cesto in mezzo alla piscina; FINE (anim29.js). PUBBLICATA 27/11 11:01 su TT+IG+YT (postId cafaf57a). SERIE CONCLUSA.
 
+## ROBOT (in corso – grafica V2.1) – "Il robot in giardino"
+- Parte 1 creata 27/11 slot 15 (iniziata 14:25, pronta ~14:55): video/robot_parte1.mp4 – CTA "ROBOT". Gino costruisce un robot (giorno 1 scatoloni, giorno 2 secchio come testa, giorno 3 lo accende: "CIAO GINO"), annaffia i fiori e anche Gino, poi vede Mario, occhi rossi, cammina verso casa sua (scene27.html: uRobot, uRobRot, uRobEye 0/1 verde/2 rosso, uRobArm, uRobBuild 0-3; anim30.js). Da pubblicare quando l'utente dice caricalo.
+- Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 28/11 slot 11.
+
 ## Prossima
 NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
 Per recuperare: 25/11 nessun altro video dopo la Zucca; 26/11 09:05 Zucca finale su YouTube, poi solo 2 video (slot 15 e 19: NUOVA serie parte 1 e 2) pubblicati subito anche su YouTube; dal 27/11 3 video al giorno (11, 15, 19) tutti subito anche su YouTube.
@@ -62,3 +66,4 @@ L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 
 - 26/11 mongolfiera p2 (notte, anim28): avvio 18:20, render 1768s, pronto ~18:55.
 - 27/11 mongolfiera p3 (notte+giorno, anim29): avvio 10:25, render 1592s, pronto ~11:00.
+- 27/11 robot p1 (giorno, anim30, nuovo modello robot): avvio 14:25, render 1266s, pronto ~14:55.
