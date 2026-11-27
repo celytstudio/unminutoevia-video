@@ -48,7 +48,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 27/11 slot 11 (iniziata 10:25, pronta ~11:00): video/mongolfiera_parte3.mp4 – SPLASH nella piscina di Mario, il pallone si sgonfia, la mattina dopo Mario si riprende l'accappatoio, lo strizza e se lo rimette bagnato; Gino resta nel cesto in mezzo alla piscina; FINE (anim29.js). PUBBLICATA 27/11 11:01 su TT+IG+YT (postId cafaf57a). SERIE CONCLUSA.
 
 ## ROBOT (in corso – grafica V2.1) – "Il robot in giardino"
-- Parte 1 creata 27/11 slot 15 (iniziata 14:25, pronta ~14:55): video/robot_parte1.mp4 – CTA "ROBOT". Gino costruisce un robot (giorno 1 scatoloni, giorno 2 secchio come testa, giorno 3 lo accende: "CIAO GINO"), annaffia i fiori e anche Gino, poi vede Mario, occhi rossi, cammina verso casa sua (scene27.html: uRobot, uRobRot, uRobEye 0/1 verde/2 rosso, uRobArm, uRobBuild 0-3; anim30.js). Da pubblicare quando l'utente dice caricalo.
+- Parte 1 creata 27/11 slot 15 (iniziata 14:25, pronta ~14:55): video/robot_parte1.mp4 – CTA "ROBOT". Gino costruisce un robot (giorno 1 scatoloni, giorno 2 secchio come testa, giorno 3 lo accende: "CIAO GINO"), annaffia i fiori e anche Gino, poi vede Mario, occhi rossi, cammina verso casa sua (scene27.html: uRobot, uRobRot, uRobEye 0/1 verde/2 rosso, uRobArm, uRobBuild 0-3; anim30.js). PUBBLICATA 27/11 14:53 su TT+IG+YT (postId 21c79a31). YouTube 27/11: 2/3 usati.
 - Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 28/11 slot 11.
 
 ## Prossima
