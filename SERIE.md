@@ -54,7 +54,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 
 ## SCIVOLO (in corso – grafica V2.1) – "Lo scivolo gigante"
 - Parte 1 creata 28/11 slot 15 (iniziata 14:25, pronta ~15:05): video/scivolo_parte1.mp4 – CTA "SCIVOLO". Giorno 1 scala, giorno 2 scivolo + trampolino, giorno 3 sapone; Gino sale, Mario preoccupato, parte velocissimo e vola sopra la siepe di Mario (scene28.html: uSlide xyz + w stadio 1 scala / 2 completo; anim33.js). PUBBLICATA 28/11 15:00 su TT+IG+YT (postId 6e8ed453). YouTube 28/11: 2/3 usati.
-- Parte 2 creata 28/11 slot 19 (iniziata 18:20, pronta ~18:50): video/scivolo_parte2.mp4 – CTA "SPLASH". Gino atterra nella piscina di Mario, Mario arrabbiato ("smontalo!"), Gino sposta lo scivolo accanto alla piscina (SP=[-3.6,0,-1.0], il trampolino finisce sopra l'acqua), Mario sale in cima (anim34.js). Da pubblicare quando l'utente dice caricalo.
+- Parte 2 creata 28/11 slot 19 (iniziata 18:20, pronta ~18:50): video/scivolo_parte2.mp4 – CTA "SPLASH". Gino atterra nella piscina di Mario, Mario arrabbiato ("smontalo!"), Gino sposta lo scivolo accanto alla piscina (SP=[-3.6,0,-1.0], il trampolino finisce sopra l'acqua), Mario sale in cima (anim34.js). PROGRAMMATA 28/11 alle 19:00 su TT+IG+YT (postId 1fbcba5b). YouTube 28/11: 3/3 usati.
 - Parte 3 FINALE 29/11 slot 11.
 
 ## Prossima
