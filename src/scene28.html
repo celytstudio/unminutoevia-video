@@ -1,0 +1,715 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:P;src:url(file:///usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf)}
+body{margin:0;background:#000}canvas{display:block}
+</style></head><body>
+<canvas id="gl" width="720" height="1280"></canvas>
+<canvas id="out" width="1080" height="1920"></canvas>
+<script id="fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+out vec4 fragColor;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uCamPos, uCamTgt;
+uniform float uPool, uWater, uLadderP, uTiles, uHatchY, uFurn, uHatchOpen, uParty; uniform vec4 uCake, uPump, uMini, uBal; uniform float uInflate, uFireB; uniform vec4 uRobot; uniform float uRobRot, uRobEye, uRobArm, uRobBuild; uniform vec4 uSlide; uniform float uSprout, uPDoor, uMiniT, uFace, uLantern, uWink;
+uniform float uDepth;      // hole depth (positive)
+uniform float uNight;      // 0 day .. 1 night
+uniform vec3 uChar;        // feet position
+uniform float uCharRot;    // yaw
+uniform float uArm;        // arm swing angle
+uniform float uBob;        // body lean
+uniform float uShovel;     // 1 has shovel
+uniform float uKneel;      // 0..1
+uniform float uFlash;      // flashlight on
+uniform vec4 uExc;         // excavator x,y,z, visible
+uniform float uExcArm;
+uniform float uGeyser;     // 0..1 height factor
+uniform float uPipeBroken;
+uniform float uHatch;      // 0 hidden .. 1 revealed
+uniform float uGreen;      // green light intensity
+uniform float uLadder;
+uniform vec4 uP[14];       // particles xyz r
+uniform float uPType;      // 0 dirt 1 water 2 spark
+uniform float uEye;
+uniform vec4 uRocket;
+uniform float uRocketV, uFire, uTilt, uHelm, uCola;
+uniform vec3 uGeyPos;
+uniform vec4 uTree;
+uniform float uBend, uTHStage, uLift;
+uniform vec3 uHutPos; uniform float uHutRot, uHutFly;
+uniform vec4 uEyes; uniform float uDArm, uRobe;
+uniform vec4 uCat; uniform float uCatA, uCatBig, uCatFlip; uniform vec4 uProj; uniform float uProjT;
+uniform vec4 uCloud; uniform vec4 uSnow, uSnow2, uArmy, uBall, uBall2; uniform float uSnowHead; uniform float uArmyRot; uniform float uSnowRot, uSnowSmile, uSnowG, uSnowRot2; uniform vec4 uTramp; uniform float uTramp2, uTrampDip;
+uniform vec4 uCat2; uniform float uCatA2, uCatBig2, uCatFlip2; uniform vec4 uProj2; uniform float uProjT2;
+
+#define PI 3.14159265
+
+vec2 rr2(vec2 v,float a){ float c=cos(a), s=sin(a); return vec2(c*v.x-s*v.y, s*v.x+c*v.y); }
+float sdBox(vec3 p, vec3 b){vec3 q=abs(p)-b;return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.);}
+float sdRBox(vec3 p, vec3 b, float r){return sdBox(p,b-r)-r;}
+float sdSph(vec3 p,float r){return length(p)-r;}
+float sdCap(vec3 p,vec3 a,vec3 b,float r){vec3 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);return length(pa-ba*h)-r;}
+float sdEll(vec3 p,vec3 r){float k0=length(p/r);float k1=length(p/(r*r));return k0*(k0-1.)/k1;}
+float sdCylZ(vec3 p,float r,float h){vec2 d=abs(vec2(length(p.xy),p.z))-vec2(r,h);return min(max(d.x,d.y),0.)+length(max(d,0.));}
+float sdCylY(vec3 p,float r,float h){vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h);return min(max(d.x,d.y),0.)+length(max(d,0.));}
+float sdTorusY(vec3 p,vec2 t){vec2 q=vec2(length(p.xz)-t.x,p.y);return length(q)-t.y;}
+float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
+mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
+float hash(vec3 p){p=fract(p*0.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
+float noise(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);
+ return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+            mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
+
+// material ids
+// 1 grass 2 soil 3 skin 4 shirt 5 jeans 6 eye white 7 pupil 8 hair/beard 9 nose 10 shovel metal 11 wood
+// 12 house wall 13 roof 14 fence 15 tree leaves 16 trunk 17 pipe 18 water 19 hatch metal 20 green glow 21 yellow excavator 22 black 23 dirt particle 24 spark 25 ladder 26 window
+vec2 U(vec2 a, vec2 b){return a.x<b.x?a:b;}
+vec2 snowman(vec3 p, vec4 S, float rot, float smile, float hd){
+  float sc=S.w; vec3 q=(p-S.xyz)/sc; float c=cos(rot), s=sin(rot); q.xz=mat2(c,-s,s,c)*q.xz;
+  if(length(q-vec3(0,1.1,0))>1.9) return vec2((length(q-vec3(0,1.1,0))-1.8)*sc,0.);
+  vec2 r=vec2(1e5,0.);
+  float b=min(sdSph(q-vec3(0,0.55,0),0.6),min(sdSph(q-vec3(0,1.35,0),0.42),hd>0.1?sdSph(q-vec3(0,1.95,0),0.3):1e5));
+  r=U(r,vec2(b,38.));
+  float k=hd>0.1?min(sdSph(q-vec3(0.1,2.02,0.27),0.04),sdSph(q-vec3(-0.1,2.02,0.27),0.04)):1e5;
+  k=min(k,min(sdSph(q-vec3(0,1.38,0.42),0.045),min(sdSph(q-vec3(0,1.55,0.37),0.045),sdSph(q-vec3(0,1.2,0.39),0.045))));
+  for(int i=0;i<5;i++){ if(hd<0.1) break; float x=(float(i)-2.)*0.06; k=min(k,sdSph(q-vec3(x,1.87+smile*0.06*(x/0.12)*(x/0.12)-0.01*smile,0.275),0.025)); }
+  r=U(r,vec2(k,7.));
+  if(hd>0.8) r=U(r,vec2(sdCap(q,vec3(0,1.95,0.27),vec3(0,1.93,0.58),0.045),4.));
+  r=U(r,vec2(sdTorusY(q-vec3(0,1.72,0),vec2(0.26,0.07)),13.));
+  float a=min(sdCap(q,vec3(0.35,1.45,0),vec3(0.85,1.8,0),0.03),sdCap(q,vec3(-0.35,1.45,0),vec3(-0.85,1.8,0),0.03));
+  r=U(r,vec2(a,11.));
+  r.x*=sc; return r;
+}
+
+
+vec2 character(vec3 p){
+  vec3 q=p-uChar;
+  if(length(q-vec3(0,1.0,0))>2.2) return vec2(length(q-vec3(0,1.,0))-1.9,0.);
+  q.xz=rot(uCharRot)*q.xz;
+  float kneel=uKneel;
+  // body lean
+  vec3 qb=q; qb.y-=0.55*(1.-kneel*0.45);
+  qb.yz=rot(uBob)*qb.yz; qb.y+=0.55*(1.-kneel*0.45);
+  float ky=-0.28*kneel;
+  // legs
+  vec2 r=vec2(1e5,0.);
+  float legs=min(sdCap(q,vec3(-0.15,0.08,0.0),vec3(-0.15,0.58+ky,0.0+0.2*kneel),0.12),
+                 sdCap(q,vec3(0.15,0.08+0.25*kneel,0.3*kneel),vec3(0.15,0.58+ky,0.0+0.2*kneel),0.12));
+  r=U(r,vec2(legs,5.));
+  float shoes=min(sdEll(q-vec3(-0.15,0.06,0.07),vec3(0.13,0.08,0.2)),sdEll(q-vec3(0.15,0.06+0.25*kneel,0.07+0.3*kneel),vec3(0.13,0.08,0.2)));
+  r=U(r,vec2(shoes,22.));
+  vec3 bq=qb-vec3(0,0.95+ky,0);
+  float body=sdEll(bq,vec3(0.4,0.45,0.3));
+  body=smin(body,sdEll(bq-vec3(0,0.15,0),vec3(0.42,0.32,0.3)),0.1);
+  r=U(r,vec2(body,4.));
+  // head
+  vec3 hq=qb-vec3(0,1.62+ky,0.02);
+  float head=sdSph(hq,0.36);
+  r=U(r,vec2(head,3.));
+  float nose=sdSph(hq-vec3(0,-0.02,0.36),0.12);
+  r=U(r,vec2(nose,9.));
+  float eo=mix(0.085,0.11,uEye);
+  vec3 eL=hq-vec3(-0.13,0.1,0.29), eR=hq-vec3(0.13,0.1,0.29);
+  float eyes=min(sdSph(eL,eo),sdSph(eR,eo));
+  r=U(r,vec2(eyes,6.));
+  float pup=min(sdSph(eL-vec3(0,0,eo*0.75),0.045),sdSph(eR-vec3(0,0,eo*0.75),0.045));
+  r=U(r,vec2(pup,7.));
+  // eyelids (sleepy) when uEye small
+  float lid=min(sdSph(eL-vec3(0,0.03,0),eo+0.012),sdSph(eR-vec3(0,0.03,0),eo+0.012));
+  lid=max(lid,-(hq.y-0.1-mix(0.02,0.11,uEye)));
+  r=U(r,vec2(lid,3.));
+  float beard=sdEll(hq-vec3(0,-0.24,0.16),vec3(0.34,0.27,0.26));
+  beard=max(beard,-sdSph(hq-vec3(0,-0.02,0.36),0.14));
+  beard+=0.02*noise(hq*28.);
+  float hair=sdEll(hq-vec3(0,0.14,-0.03),vec3(0.395,0.34,0.39));
+  hair=max(hair,-(dot(hq-vec3(0,0.2,0.22),normalize(vec3(0,-0.55,1.)))));
+  float ears=min(sdEll(hq-vec3(-0.36,0.0,0.),vec3(0.06,0.1,0.08)),sdEll(hq-vec3(0.36,0.0,0.),vec3(0.06,0.1,0.08)));
+  r=U(r,vec2(ears,3.));
+  hair+=0.035*noise(hq*18.);
+  r=U(r,vec2(min(beard,hair),8.));
+  if(uHelm>0.5){ float hm=sdSph(hq-vec3(0,0.02,0),0.5); hm=max(hm,-sdSph(hq-vec3(0,0.0,0.32),0.36)); hm=max(hm,-sdSph(hq,0.47)); hm=min(hm,sdTorusY(hq-vec3(0,-0.42,0),vec2(0.42,0.07))); hm=min(hm,sdCylY(hq-vec3(0,0.52,0),0.08,0.05)); r=U(r,vec2(hm,31.)); }
+  float brow=min(sdCap(hq,vec3(-0.21,0.24,0.31),vec3(-0.06,0.22+0.03*uEye,0.34),0.025),sdCap(hq,vec3(0.21,0.24,0.31),vec3(0.06,0.22+0.03*uEye,0.34),0.025));
+  r=U(r,vec2(brow,8.));
+  // arms
+  vec3 sL=vec3(-0.4,1.3+ky,0.), sR=vec3(0.4,1.3+ky,0.);
+  float a=uArm;
+  vec3 hL=sL+vec3(0.18,-0.45*cos(a),0.45*sin(a)+0.05);
+  vec3 hR=sR+vec3(-0.18,-0.45*cos(a+0.25),0.45*sin(a+0.25)+0.05);
+  if(uFlash>0.5){ hR=sR+vec3(-0.15,-0.1,0.5); }
+  float arms=min(sdCap(qb,sL,hL,0.1),sdCap(qb,sR,hR,0.1));
+  r=U(r,vec2(arms,4.));
+  float hands=min(sdSph(qb-hL,0.11),sdSph(qb-hR,0.11));
+  r=U(r,vec2(hands,22.));
+  if(uShovel>0.5){
+    vec3 hm=(hL+hR)*0.5;
+    vec3 dir=normalize(vec3(0.,-cos(a-0.6),sin(a-0.6)));
+    vec3 tip=hm+dir*1.05; vec3 top=hm-dir*0.3;
+    r=U(r,vec2(sdCap(qb,top,tip,0.035),11.));
+    vec3 bp=qb-(tip+dir*0.15);
+    // orient blade: approximate box aligned to dir
+    vec3 up=dir; vec3 side=vec3(1,0,0); vec3 fw=normalize(cross(side,up));
+    vec3 lb=vec3(dot(bp,side),dot(bp,up),dot(bp,fw));
+    r=U(r,vec2(sdRBox(lb,vec3(0.17,0.2,0.025),0.02),10.));
+  }
+  if(uFlash>0.5){
+    r=U(r,vec2(sdCap(qb,hR,hR+vec3(0,-0.05,0.25),0.06),22.));
+  }
+  return r;
+}
+
+vec2 excavator(vec3 p){
+  if(uExc.w<0.5) return vec2(1e5,0.);
+  vec3 q=p-uExc.xyz; q.x=-q.x;
+  if(length(q-vec3(0,1.,0))>3.2) return vec2(length(q-vec3(0,1.,0))-3.,0.);
+  vec2 r=vec2(1e5,0.);
+  float tr=min(sdRBox(q-vec3(0,0.25,0.45),vec3(1.1,0.25,0.2),0.2),sdRBox(q-vec3(0,0.25,-0.45),vec3(1.1,0.25,0.2),0.2));
+  r=U(r,vec2(tr,22.));
+  float bd=sdRBox(q-vec3(-0.1,0.75,0),vec3(0.9,0.28,0.6),0.12);
+  float cab=sdRBox(q-vec3(-0.35,1.35,0),vec3(0.45,0.42,0.5),0.1);
+  float win=sdRBox(q-vec3(-0.35,1.45,0.0),vec3(0.47,0.25,0.4),0.04);
+  r=U(r,vec2(min(bd,cab),21.));
+  r=U(r,vec2(max(win,-cab+0.02)<0.?win:max(win,cab-0.0)+0.02,26.));
+  vec3 j0=vec3(0.6,1.0,0.);
+  float a=uExcArm;
+  vec3 j1=j0+vec3(0.9*cos(0.9-a*0.3),0.9*sin(0.9-a*0.3),0);
+  vec3 j2=j1+vec3(0.7*cos(-0.6-a),0.7*sin(-0.6-a),0);
+  float arm=min(sdCap(q,j0,j1,0.13),sdCap(q,j1,j2,0.1));
+  r=U(r,vec2(arm,21.));
+  vec3 bq=q-j2; bq.xy=rot(a*0.8)*bq.xy;
+  float bucket=sdRBox(bq-vec3(0.12,-0.1,0),vec3(0.2,0.18,0.28),0.05);
+  bucket=max(bucket,-sdBox(bq-vec3(0.2,0.05,0),vec3(0.15,0.15,0.22)));
+  r=U(r,vec2(bucket,22.));
+  return r;
+}
+
+vec2 mapScene(vec3 p){
+  vec2 r=vec2(1e5,0.);
+  // ground slab with cutaway front at z=0
+  float g=sdBox(p-vec3(0,-4.5,-3.),vec3(9.,4.5,3.));
+  // hole box opening towards camera
+  float hd=max(uDepth,0.001);
+  float hole=sdBox(p-vec3(0.9,-hd*0.5+0.3,-0.8),vec3(1.25,hd*0.5+0.3,1.6));
+  g=max(g,-hole);
+  if(uPool>0.5){ float pool=sdBox(p-vec3(0.9,-0.45,-1.2),vec3(1.3,0.75,1.4)); g=max(g,-pool); if(uHatchOpen>0.5) g=max(g,-sdCylY(p-vec3(0.9,uHatchY-0.6,-1.0),0.62,0.62)); }
+  // dirt piles on surface beside hole
+  float pile=sdEll(p-vec3(-1.6,0.,-1.2),vec3(0.3+min(uDepth,5.)*0.18,0.15+min(uDepth,5.)*0.1,0.5+min(uDepth,5.)*0.1));
+  pile+=0.03*noise(p*6.);
+  float gm = (p.y>-0.18 && g<0.05)?1.:2.;
+  if(uPool>0.5 && uTiles>0.5 && abs(p.x-0.9)<1.34 && p.y<0.03 && p.y>-1.24 && p.z>-2.64 && p.z<0.02 && g<0.05) gm=44.;
+  r=vec2(g,gm);
+  r=U(r,vec2(pile,23.));
+  // pipe crossing hole along z at depth 1.6
+  float pipe=sdCylZ(p-vec3(0.9,-1.7,-1.5),0.16,1.6);
+  if(uPipeBroken>0.5) pipe=max(pipe,-sdBox(p-vec3(0.9,-1.7,-1.0),vec3(0.4,0.4,0.25)));
+
+  // hatch at bottom
+  if(uHatch>0.01){
+    vec3 hq=p-vec3(0.9,uHatchY+0.06,-1.0);
+    float plate=uHatchOpen>0.5?1e5:sdCylY(hq,0.7,0.06);
+    float rim=sdTorusY(hq-vec3(0,0.07,0),vec2(0.68,0.05));
+    vec3 wq=hq-vec3(0,0.2,0); wq.xz=rot(uTime*0.3*uHatch*0.)*wq.xz;
+    float wheel=uHatchOpen>0.5?1e5:min(sdTorusY(wq,vec2(0.28,0.035)),min(sdCap(wq,vec3(-0.28,0,0),vec3(0.28,0,0),0.025),sdCap(wq,vec3(0,0,-0.28),vec3(0,0,0.28),0.025)));
+    if(uHatchOpen<0.5) wheel=min(wheel,sdCylY(hq-vec3(0,0.13,0),0.05,0.08));
+    r=U(r,vec2(min(plate,min(rim,wheel)),19.));
+    float glow=sdTorusY(hq-vec3(0,0.0,0),vec2(0.73,0.03));
+    r=U(r,vec2(glow,20.));
+  }
+  // ladder
+  if(uLadder>0.5){
+    vec3 lq=p-vec3(1.95,-uDepth*0.5+0.4,-1.2);
+    float rails=min(sdCap(lq,vec3(-0.25,-uDepth*0.5-0.1,0),vec3(-0.25,uDepth*0.5+0.5,0),0.04),sdCap(lq,vec3(0.25,-uDepth*0.5-0.1,0),vec3(0.25,uDepth*0.5+0.5,0),0.04));
+    vec3 rq=lq; rq.y=mod(rq.y+0.2,0.4)-0.2;
+    float rungs=max(sdCap(rq,vec3(-0.25,0,0),vec3(0.25,0,0),0.03),abs(lq.y)-uDepth*0.5-0.4);
+    r=U(r,vec2(min(rails,rungs),25.));
+  }
+  if(abs(p.z+5.15)<0.7 && p.y<1.2 && p.x>-1.4 && p.x<8.4){
+    vec3 bq=p-vec3(0.,0.,-5.15); float cid=floor(bq.x/0.7+0.5); bq.x-=cid*0.7; bq.x=clamp(bq.x,-0.35,0.35)+ (bq.x-clamp(bq.x,-0.35,0.35));
+    float bush=sdEll(bq-vec3(0.,0.32,0.),vec3(0.42,0.36,0.34))+0.04*noise(p*9.);
+    r=U(r,vec2(bush,15.));
+    vec3 fq=bq; fq.xy-=vec2(sin(cid*3.1)*0.15,0.55); float fl=sdSph(fq,0.07); fl=min(fl,sdSph(fq-vec3(-0.22,-0.12,0.2),0.06)); fl=min(fl,sdSph(fq-vec3(0.2,-0.18,0.22),0.06));
+    r=U(r,vec2(fl,45.+fract(cid*0.37)*0.9));
+  }
+  if(uPool>0.5 && uTiles>0.5){ float rim=max(sdBox(p-vec3(0.9,0.03,-1.35),vec3(1.5,0.05,1.5)),-sdBox(p-vec3(0.9,0.03,-1.3),vec3(1.3,0.2,1.3)));
+    rim=max(rim,p.z-0.0); r=U(r,vec2(rim-0.01,14.)); }
+  if(uSlide.w>0.){ vec3 q=p-uSlide.xyz;
+    if(q.x>-0.4&&q.x<4.3&&q.y<2.6&&abs(q.z)<0.7){
+      float po=min(min(sdBox(q-vec3(0,1.0,0.3),vec3(0.04,1.0,0.04)),sdBox(q-vec3(0,1.0,-0.3),vec3(0.04,1.0,0.04))),
+                   min(sdBox(q-vec3(0.5,1.0,0.3),vec3(0.04,1.0,0.04)),sdBox(q-vec3(0.5,1.0,-0.3),vec3(0.04,1.0,0.04))));
+      vec3 rq=q; rq.y=q.y-0.3*clamp(floor(q.y/0.3+0.5),1.,6.);
+      po=min(po,sdCap(rq,vec3(-0.02,0,-0.3),vec3(-0.02,0,0.3),0.025));
+      po=min(po,sdBox(q-vec3(0.25,2.0,0),vec3(0.3,0.04,0.33)));
+      r=U(r,vec2(po,23.));
+      if(uSlide.w>1.5){ float a=0.5834; vec2 u=rr2(q.xy-vec2(1.875,1.125),a);
+        float rp=sdBox(vec3(u.x,u.y,q.z),vec3(1.59,0.03,0.3)); r=U(r,vec2(rp,21.));
+        float rl=min(sdBox(vec3(u.x,u.y-0.08,q.z-0.3),vec3(1.59,0.08,0.03)),sdBox(vec3(u.x,u.y-0.08,q.z+0.3),vec3(1.59,0.08,0.03))); r=U(r,vec2(rl,13.));
+        float b=-0.6202; vec2 w=rr2(q.xy-vec2(3.55,0.5),b);
+        float kp=sdBox(vec3(w.x,w.y,q.z),vec3(0.43,0.03,0.3)); r=U(r,vec2(kp,21.));
+        float kl=min(sdBox(vec3(w.x,w.y-0.08,q.z-0.3),vec3(0.43,0.08,0.03)),sdBox(vec3(w.x,w.y-0.08,q.z+0.3),vec3(0.43,0.08,0.03))); r=U(r,vec2(kl,13.));
+        float lg=min(sdBox(q-vec3(1.9,0.55,0.25),vec3(0.03,0.55,0.03)),sdBox(q-vec3(1.9,0.55,-0.25),vec3(0.03,0.55,0.03)));
+        lg=min(lg,min(sdBox(q-vec3(3.6,0.25,0.25),vec3(0.03,0.25,0.03)),sdBox(q-vec3(3.6,0.25,-0.25),vec3(0.03,0.25,0.03)))); r=U(r,vec2(lg,23.)); }
+    } else r=U(r,vec2(sdBox(q-vec3(2.0,1.2,0),vec3(2.2,1.3,0.6)),0.)); }
+  if(uRobot.w>0.){ float rs=uRobot.w; vec3 rq=(p-uRobot.xyz)/rs; rq.xz=rot(uRobRot)*rq.xz;
+    if(length(rq-vec3(0,0.85,0))<1.2){
+      float lg=min(sdRBox(rq-vec3(0.13,0.2,0),vec3(0.08,0.2,0.08),0.02),sdRBox(rq-vec3(-0.13,0.2,0),vec3(0.08,0.2,0.08),0.02)); r=U(r,vec2(lg*rs,25.));
+      if(uRobBuild>0.5){ r=U(r,vec2(sdRBox(rq-vec3(0,0.72,0),vec3(0.27,0.32,0.19),0.03)*rs,25.));
+        float ca=uRobArm; vec3 hd=vec3(0,-cos(ca)*0.42,sin(ca)*0.42);
+        float am=min(sdCap(rq,vec3(0.32,0.92,0),vec3(0.36,0.92,0)+hd,0.05),sdCap(rq,vec3(-0.32,0.92,0),vec3(-0.36,0.92,0)+hd*vec3(1,1,0.4)+vec3(0,0,0),0.05)); r=U(r,vec2(am*rs,10.));
+        r=U(r,vec2(sdBox(rq-vec3(0,0.78,0.19),vec3(0.12,0.08,0.012))*rs,22.)); }
+      if(uRobBuild>1.5){ r=U(r,vec2((sdCylY(rq-vec3(0,1.24,0),0.2,0.17)-0.01)*rs,10.));
+        float ey=min(sdSph(rq-vec3(0.08,1.27,0.19),0.055),sdSph(rq-vec3(-0.08,1.27,0.19),0.055)); r=U(r,vec2(ey*rs,51.)); }
+      if(uRobBuild>2.5){ r=U(r,vec2(sdCap(rq,vec3(0,1.41,0),vec3(0,1.66,0),0.015)*rs,22.)); r=U(r,vec2(sdSph(rq-vec3(0,1.7,0),0.045)*rs,51.)); }
+    } else r=U(r,vec2((length(rq-vec3(0,0.85,0))-1.1)*rs,0.)); }
+  if(uPump.w>0.){ vec3 pq=(p-uPump.xyz)/uPump.w; float ang=atan(pq.z,pq.x);
+    if(length(pq-vec3(0,0.75,0))<1.6){
+      float rr=1.0+0.07*cos(10.*ang)*smoothstep(0.,0.4,length(pq.xz));
+      float pk=sdEll(pq-vec3(0,0.78,0),vec3(1.05*rr,0.8,1.05*rr));
+      if(uPDoor>0.01){ pk=max(pk,-sdEll(pq-vec3(0,0.78,0),vec3(0.95*rr,0.72,0.95*rr))); pk=max(pk,-max(length(vec2(pq.x,pq.y-0.42))-0.34*uPDoor,-pq.z)); }
+      if(uFace>0.01){ vec3 fq=pq; float fz=-fq.z;
+        float eyeL=sdEll(fq-vec3(-0.38,1.0,0.9),vec3(0.17,0.15*uFace*(1.-0.85*uWink),0.5)); float eyeR=sdEll(fq-vec3(0.38,1.0,0.9),vec3(0.17,0.15*uFace,0.5));
+        float nose=sdEll(fq-vec3(0.,0.8,1.0),vec3(0.09,0.09*uFace,0.5));
+        float sm=max(abs(length(fq.xy-vec2(0.,0.98))-0.48)-0.075*uFace,fq.y-0.72); sm=max(sm,abs(fq.x)-0.5);
+        float cut=max(min(min(eyeL,eyeR),min(nose,sm)),fz);
+        pk=max(pk,-cut); pk=max(pk,-sdEll(pq-vec3(0,0.78,0),vec3(0.95*rr,0.72,0.95*rr))); }
+      float inr=(uPDoor>0.01||uFace>0.01)?-sdEll(pq-vec3(0,0.78,0),vec3(0.95*rr,0.72,0.95*rr)):1e5;
+      float pko=sdEll(pq-vec3(0,0.78,0),vec3(1.05*rr,0.8,1.05*rr));
+      r=U(r,vec2(pk*uPump.w*0.8,((uPDoor>0.01||uFace>0.01) && inr>pko && length(vec2(pq.x,pq.y-0.42))>0.3)?30.:4.));
+      r=U(r,vec2(sdCap(pq,vec3(0,1.45,0),vec3(0.06,1.75,0.04),0.08)*uPump.w,8.));
+      vec3 lq=pq-vec3(0.55,1.2,0.3); r=U(r,vec2(sdEll(lq,vec3(0.35,0.05,0.25))*uPump.w,15.));
+    } else r=U(r,vec2((length(pq-vec3(0,0.75,0))-1.5)*uPump.w,0.)); }
+  if(uMini.w>0.){ vec3 mq=p-uMini.xyz; mq.x-=uMiniT; float ix=clamp(floor(mq.x/0.7+0.5),-4.,4.), iz=clamp(floor(mq.z/0.45+0.5),-1.,1.);
+    float ph=fract(sin(ix*12.9+iz*78.2)*43758.5); vec3 c=vec3(ix*0.7+(ph-0.5)*0.2,0.,iz*0.45); vec3 lq=(mq-c)/uMini.w;
+    float a=uMiniT*3.*(1.+ph); float ca=cos(a),sa=sin(a); lq.xy=mat2(ca,-sa,sa,ca)*(lq.xy-vec2(0,0.35))+vec2(0,0.35);
+    float ang=atan(lq.z,lq.x); float pkm=sdEll(lq-vec3(0,0.35,0),vec3(0.42*(1.+0.07*cos(10.*ang)),0.33,0.42*(1.+0.07*cos(10.*ang))));
+    r=U(r,vec2(pkm*uMini.w*0.8,4.)); r=U(r,vec2(sdCap(lq,vec3(0,0.62,0),vec3(0.02,0.76,0),0.04)*uMini.w,8.)); }
+  if(uSprout>0.01){ vec3 sq=p-vec3(1.4,0.,-1.6); float h=0.35*uSprout;
+    float st=sdCap(sq,vec3(0),vec3(0,h,0),0.025); st=min(st,sdEll(sq-vec3(0.09,h,0),vec3(0.1,0.025,0.06)*uSprout+0.01)); st=min(st,sdEll(sq-vec3(-0.09,h*0.85,0),vec3(0.1,0.025,0.06)*uSprout+0.01));
+    r=U(r,vec2(st,15.)); r=U(r,vec2(sdEll(sq-vec3(0,0.01,0),vec3(0.18,0.04,0.18)),23.)); }
+  if(uBal.w>0.){ float sc=uBal.w; vec3 bq=(p-uBal.xyz)/sc;
+    if(length(bq-vec3(0,2.4,0))<3.6){
+      float bk=max(sdBox(bq-vec3(0,0.3,0),vec3(0.42,0.3,0.42))-0.03,-sdBox(bq-vec3(0,0.42,0),vec3(0.36,0.32,0.36)));
+      r=U(r,vec2(bk*sc,11.));
+      if(uInflate>0.01){ float R=mix(0.35,1.25,uInflate); vec3 eq=bq-vec3(0,2.35+R*1.05,0);
+        float env=sdEll(eq,vec3(R,R*1.15,R)); env=min(env,sdEll(eq+vec3(0,R*0.95,0),vec3(R*0.45,R*0.35,R*0.45)));
+        float ang=atan(eq.z,eq.x); float stripe=step(0.5,fract(ang/6.2832*8.));
+        r=U(r,vec2(env*sc*0.85,49.+stripe*0.5));
+        float rp=1e5; for(int i=0;i<4;i++){ float a=float(i)*1.5708+0.785; vec3 c0=vec3(cos(a)*0.4,0.6,sin(a)*0.4); vec3 c1=vec3(cos(a)*R*0.42,2.35+R*0.15,sin(a)*R*0.42); rp=min(rp,sdCap(bq,c0,c1,0.012)); }
+        r=U(r,vec2(rp*sc,22.)); }
+      if(uFireB>0.01){ r=U(r,vec2(sdCylY(bq-vec3(0,2.05,0),0.08,0.06)*sc,31.)); r=U(r,vec2(sdEll(bq-vec3(0,2.2+0.15*uFireB,0),vec3(0.08,0.2,0.08)*uFireB)*sc,24.)); }
+    } else r=U(r,vec2((length(bq-vec3(0,2.4,0))-3.4)*sc,0.)); }
+  if(uCake.w>0.){ vec3 cq=(p-uCake.xyz)/uCake.w;
+    float ck=min(sdCylY(cq-vec3(0,0.12,0),0.42,0.12),min(sdCylY(cq-vec3(0,0.36,0),0.3,0.12),sdCylY(cq-vec3(0,0.57,0),0.19,0.09)));
+    r=U(r,vec2((ck-0.02)*uCake.w,14.));
+    float band=min(sdTorusY(cq-vec3(0,0.22,0),vec2(0.42,0.03)),sdTorusY(cq-vec3(0,0.46,0),vec2(0.3,0.03))); r=U(r,vec2(band*uCake.w,13.));
+    float cand=1e5, fl=1e5; for(int i=0;i<5;i++){ float a=float(i)*1.2566; vec3 c0=vec3(cos(a)*0.11,0.66,sin(a)*0.11); cand=min(cand,sdCap(cq,c0,c0+vec3(0,0.14,0),0.018)); fl=min(fl,sdEll(cq-c0-vec3(0,0.19,0),vec3(0.025,0.045,0.025))); }
+    r=U(r,vec2(cand*uCake.w,9.)); r=U(r,vec2(fl*uCake.w,21.)); }
+  if(uParty>0.5 && abs(p.z+2.75)<0.3 && p.y>0.8 && p.y<2.2 && p.x>-0.9 && p.x<2.7){
+    float xx=p.x-0.9; float wy=1.75-0.3*(1.-(xx/1.6)*(xx/1.6));
+    float wire=length(vec2(p.y-wy,p.z+2.75))-0.012; r=U(r,vec2(wire,22.));
+    float id=floor(p.x/0.32+0.5); vec3 bq=p-vec3(id*0.32,0.,-2.75); float bx=id*0.32-0.9; bq.y-=1.75-0.3*(1.-(bx/1.6)*(bx/1.6))-0.07;
+    r=U(r,vec2(sdSph(bq,0.055),47.+fract(id*0.37)*0.9)); }
+  if(uFurn>0.5){ vec3 fq=p-vec3(0.6,-1.2,-2.15);
+    float sofa=sdBox(fq-vec3(0,0.18,0),vec3(0.6,0.14,0.28))-0.04; sofa=min(sofa,sdBox(fq-vec3(0,0.42,-0.22),vec3(0.6,0.22,0.07))-0.04);
+    sofa=min(sofa,min(sdBox(fq-vec3(0.6,0.3,0),vec3(0.07,0.18,0.28))-0.03,sdBox(fq-vec3(-0.6,0.3,0),vec3(0.07,0.18,0.28))-0.03));
+    r=U(r,vec2(sofa,13.)); }
+  if(uFurn>1.5){ vec3 lq=p-vec3(1.6,-1.2,-2.25);
+    r=U(r,vec2(min(sdCap(lq,vec3(0,0,0),vec3(0,0.75,0),0.025),sdCylY(lq,0.14,0.02)),10.));
+    float shade=max(sdCylY(lq-vec3(0,0.82,0),0.18-0.4*(lq.y-0.82),0.1),-sdCylY(lq-vec3(0,0.82,0),0.15-0.4*(lq.y-0.82),0.2));
+    r=U(r,vec2(shade*0.8,21.)); r=U(r,vec2(sdSph(lq-vec3(0,0.8,0),0.07),24.)); }
+  if(uFurn>2.5){ vec3 mq=p-vec3(2.6,0.,-0.35);
+    r=U(r,vec2(sdCap(mq,vec3(0,0,0),vec3(0,0.9,0),0.04),11.));
+    float mb=sdBox(mq-vec3(0,1.0,0),vec3(0.12,0.11,0.2))-0.03; r=U(r,vec2(mb,41.));
+    r=U(r,vec2(sdBox(mq-vec3(0.16,1.12,-0.1),vec3(0.01,0.1,0.02)),13.)); }
+  if(uLadderP>0.5){ vec3 lq=p-vec3(2.0,-0.35,-0.45);
+    float rails=min(sdCap(lq,vec3(-0.22,-0.8,0),vec3(-0.22,0.75,0),0.035),sdCap(lq,vec3(0.22,-0.8,0),vec3(0.22,0.75,0),0.035));
+    rails=min(rails,min(sdCap(lq,vec3(-0.22,0.75,0),vec3(-0.22,0.75,0.35),0.035),sdCap(lq,vec3(0.22,0.75,0),vec3(0.22,0.75,0.35),0.035)));
+    vec3 rq=lq; rq.y=mod(rq.y+0.15,0.3)-0.15; float rungs=max(sdCap(rq,vec3(-0.22,0,0),vec3(0.22,0,0),0.025),abs(lq.y+0.1)-0.65);
+    r=U(r,vec2(min(rails,rungs),10.)); }
+  // background house
+  vec3 hp=p-vec3(-3.4,0.,-5.);
+  float wall=sdBox(hp-vec3(0,1.3,0),vec3(1.8,1.3,1.4));
+  r=U(r,vec2(wall,12.));
+  vec3 rp=hp-vec3(0,2.6,0);
+  float roof=max(sdBox(rp,vec3(2.0,1.2,1.6)), (abs(rp.x)*0.75+rp.y)-0.9);
+  roof=max(roof,-rp.y);
+  r=U(r,vec2(roof,13.));
+  float win=min(sdBox(hp-vec3(-0.8,1.5,1.41),vec3(0.38,0.4,0.03)),sdBox(hp-vec3(0.7,1.5,1.41),vec3(0.38,0.4,0.03)));
+  float door=sdBox(hp-vec3(0.0,0.7,1.41),vec3(0.3,0.7,0.03));
+  r=U(r,vec2(win,26.)); r=U(r,vec2(door,11.));
+  // fence
+  vec3 fp=p-vec3(0,0.,-5.6); fp.x=mod(fp.x+0.25,0.5)-0.25;
+  float fence=max(sdBox(fp-vec3(0,0.5,0),vec3(0.18,0.5,0.03)),abs(p.x-3.5)-5.);
+  fence=min(fence,max(sdBox(p-vec3(3.5,0.75,-5.62),vec3(5.,0.06,0.02)),0.));
+  r=U(r,vec2(fence,14.));
+  // tree
+  vec3 tp=p-vec3(4.2,0.,-3.8);
+  float trunk=sdCap(tp,vec3(0,0,0),vec3(0,1.6,0),0.18);
+  r=U(r,vec2(trunk,16.));
+  float leaves=min(sdSph(tp-vec3(0,2.3,0),1.0),min(sdSph(tp-vec3(0.6,1.9,0.2),0.7),sdSph(tp-vec3(-0.6,2.0,-0.1),0.75)));
+  leaves+=0.08*noise(tp*4.);
+  r=U(r,vec2(leaves,15.));
+  if(uRocket.w>0.){
+    float sc=uRocket.w; vec3 q=(p-uRocket.xyz)/sc;
+    q.y-=1.4; q.xy=rot(uTilt)*q.xy; q.y+=1.4;
+    if(length(q-vec3(0,1.2,0))<3.8){
+      float body=sdCylY(q-vec3(0,1.0,0),0.45,0.9)-0.02;
+      float nose=max(sdEll(q-vec3(0,1.9,0),vec3(0.46,0.95,0.46)),-(q.y-1.9));
+      float bm = uRocketV<0.5?35.:33.;
+      if(uRocketV>0.5 && abs(q.y-0.95)<0.07) bm=13.;
+      r=U(r,vec2(body*sc,bm));
+      r=U(r,vec2(nose*sc,uRocketV<0.5?36.:13.));
+      float fins=1e5; for(int i=0;i<3;i++){ vec3 fq=q; fq.xz=rot(float(i)*2.094)*fq.xz; fins=min(fins,sdRBox(fq-vec3(0,0.3,0.55),vec3(0.035,0.32,0.22),0.02)); }
+      if(uRocketV>0.5) r=U(r,vec2(fins*sc,13.));
+      if(uRocketV>0.5){ float win=sdSph(q-vec3(0,1.35,0.4),0.17); r=U(r,vec2(win*sc,26.)); r=U(r,vec2(sdTorusY((q-vec3(0,1.35,0.43)).xzy,vec2(0.17,0.035))*sc,10.)); }
+      if(uRocketV<0.5){ float lid=sdCylY(q-vec3(0,1.92,0),0.5,0.04); r=U(r,vec2(lid*sc,35.)); }
+      if(uFire>0.01){ float fl=sdCap(q,vec3(0,0.05,0),vec3(0,-1.6*uFire,0),0.33)+0.08*noise(q*7.+vec3(0,uTime*20.,0));
+        r=U(r,vec2(fl*sc*0.8,24.)); }
+    } else r=U(r,vec2((length(q-vec3(0,1.2,0))-3.5)*sc,0.));
+  }
+  if(uTree.w>0.){
+    vec3 q=p-uTree.xyz; q.xy=rot(uBend)*q.xy;
+    if(length(q-vec3(0,3.4,0))<5.0){
+      float tr=sdCap(q,vec3(0,0,0),vec3(0,5.0,0),0.3-0.04*clamp(q.y/4.,0.,1.));
+      tr=min(tr,sdCap(q,vec3(0,3.2,0),vec3(-1.0,4.7,0.1),0.12));
+      tr=min(tr,sdCap(q,vec3(0,3.6,0),vec3(1.0,5.0,-0.1),0.11));
+      r=U(r,vec2(tr,16.));
+      float lv=min(sdSph(q-vec3(0,5.8,0),1.4),min(sdSph(q-vec3(1.1,5.3,0.2),1.0),sdSph(q-vec3(-1.1,5.4,-0.1),1.05)));
+      lv+=0.12*noise(q*3.);
+      r=U(r,vec2(lv,15.));
+      if(uTHStage>2.5){ float rope=sdCap(q,vec3(1.45,4.15,0.7),vec3(1.45,uLift+0.9,0.7),0.025); r=U(r,vec2(rope,25.));
+        r=U(r,vec2(sdTorusY((q-vec3(1.45,4.2,0.7)).xzy,vec2(0.12,0.03)),10.));
+        float cab=sdCylY(q-vec3(1.45,uLift+0.42,0.7),0.42,0.42); cab=max(cab,-sdCylY(q-vec3(1.45,uLift+0.55,0.7),0.36,0.42));
+        r=U(r,vec2(cab,35.)); }
+    } else r=U(r,vec2(length(q-vec3(0,3.4,0))-4.7,0.));
+  }
+  {
+    vec3 q=p-uHutPos; q.xy=rot(uHutRot)*q.xy; if(uHutFly>0.5) q.y+=3.4;
+    if(length(q-vec3(0,3.4,0))<2.4){
+      float wood=sdBox(q-vec3(0.55,2.6,0.35),vec3(0.75,0.035,0.13));
+      if(uTHStage>0.5) wood=min(wood,sdBox(q-vec3(0,2.6,0),vec3(1.0,0.06,1.0)));
+      if(uTHStage>1.5){ float walls=sdBox(q-vec3(0,3.2,0),vec3(0.95,0.58,0.95)); walls=max(walls,-sdBox(q-vec3(0,3.25,0),vec3(0.89,0.6,0.89)));
+        walls=max(walls,-sdBox(q-vec3(0.,3.3,0.95),vec3(0.28,0.24,0.1))); wood=min(wood,walls);
+        float roof=max(sdBox(q-vec3(0,4.1,0),vec3(1.15,0.55,1.15)),(abs(q.x)*0.8+q.y)-4.55); roof=max(roof,-(q.y-3.78));
+        r=U(r,vec2(roof,13.)); }
+      r=U(r,vec2(wood,11.));
+    } else r=U(r,vec2(length(q-vec3(0,3.4,0))-2.2,0.));
+  }
+  { vec3 nq=p-vec3(4.9,0,-2.2);
+    float nw=sdBox(nq-vec3(0,1.1,0),vec3(1.3,1.1,1.1)); r=U(r,vec2(nw,41.));
+    vec3 rq=nq-vec3(0,2.2,0); float nr=max(sdBox(rq,vec3(1.45,1.0,1.25)),(abs(rq.x)*0.75+rq.y)-0.95); nr=max(nr,-rq.y); r=U(r,vec2(nr,13.));
+    r=U(r,vec2(sdBox(nq-vec3(-0.5,1.3,1.11),vec3(0.3,0.3,0.03)),26.)); r=U(r,vec2(sdBox(nq-vec3(0.5,0.65,1.11),vec3(0.28,0.65,0.03)),11.)); }
+  if(p.y>5.){
+    vec3 cq=p-vec3(0,0,-9.); cq.y=mod(cq.y-6.,9.)-4.5; cq.x=mod(cq.x+4.,8.)-4.;
+    float cl=min(sdSph(cq,1.1),min(sdSph(cq-vec3(1.,-0.2,0.2),0.8),sdSph(cq-vec3(-1.,-0.3,0.),0.75)));
+    r=U(r,vec2(cl,38.));
+  }
+  if(uCloud.w>0.){
+    vec3 cq=(p-uCloud.xyz)/uCloud.w;
+    float cl=min(sdSph(cq,1.1),min(sdSph(cq-vec3(1.1,-0.25,0.2),0.85),min(sdSph(cq-vec3(-1.1,-0.3,0.),0.8),sdSph(cq-vec3(0.2,-0.3,0.7),0.8))));
+    r=U(r,vec2(cl*uCloud.w,38.));
+  }
+  if(uEyes.w>0.5){
+    vec3 eq=p-uEyes.xyz;
+    if(length(eq-vec3(0,-0.8,0))<2.2){
+    float helm=sdSph(eq,0.44);
+    helm=min(helm,sdCylY(eq-vec3(0,0.46,0),0.08,0.06));
+    helm=min(helm,sdTorusY(eq-vec3(0,-0.38,0),vec2(0.4,0.07)));
+    r=U(r,vec2(helm,31.));
+    vec3 e1=eq-vec3(-0.17,0.04,0.36), e2=eq-vec3(0.17,0.04,0.36);
+    r=U(r,vec2(min(sdSph(e1,0.15),sdSph(e2,0.15)),6.));
+    r=U(r,vec2(min(sdSph(e1-vec3(0.,0.,0.09),0.085),sdSph(e2-vec3(0.,0.,0.09),0.085)),30.));
+    float body=sdEll(eq-vec3(0,-0.95,0),vec3(0.52,0.62,0.4));
+    float legs=min(sdCap(eq,vec3(-0.2,-1.3,0),vec3(-0.2,-1.68,0.05),0.13),sdCap(eq,vec3(0.2,-1.3,0),vec3(0.2,-1.68,0.05),0.13));
+    r=U(r,vec2(legs,3.));
+    vec3 sL=vec3(-0.5,-0.6,0.), sR=vec3(0.5,-0.6,0.);
+    float a=uDArm;
+    vec3 hR = a<1.? mix(sR+vec3(0.1,-0.6,0.1), sR+vec3(0.7,0.05,0.25), a) : mix(sR+vec3(0.7,0.05,0.25), sR+vec3(0.25+0.15*sin(uTime*9.),0.7,0.15), a-1.);
+    vec3 hL=sL+vec3(-0.1,-0.6,0.15);
+    body=min(body,min(sdCap(eq,sR,hR,0.12),sdCap(eq,sL,hL,0.12)));
+    r=U(r,vec2(body,uRobe>0.5?33.:32.));
+    r=U(r,vec2(min(sdSph(eq-hR,0.13),sdSph(eq-hL,0.13)),22.));
+    } else r=U(r,vec2(length(eq-vec3(0,-0.8,0))-2.,0.));
+  }
+  if(uCat.w>0.){
+    float sc=uCat.w; vec3 q=(p-uCat.xyz)/sc; if(uCatFlip>0.5) q.x=-q.x;
+    if(length(q-vec3(0,1.,0))<3.2){
+      float base=sdBox(q-vec3(0,0.1,0),vec3(1.0,0.1,0.55));
+      base=min(base,min(sdBox(q-vec3(0,0.55,0.42),vec3(0.08,0.5,0.06)),sdBox(q-vec3(0,0.55,-0.42),vec3(0.08,0.5,0.06))));
+      base=min(base,sdCap(q,vec3(0,1.0,-0.5),vec3(0,1.0,0.5),0.06));
+      vec3 dir=vec3(-cos(uCatA),sin(uCatA),0.);
+      vec3 pv=vec3(0,1.0,0); vec3 tip=pv+dir*1.6;
+      float arm=sdCap(q,pv-dir*(uCatBig>0.5?0.5:0.2),tip,0.07);
+      float cup=max(sdSph(q-tip,0.3),-sdSph(q-tip-normalize(vec3(sin(uCatA),cos(uCatA),0.))*0.14,0.27));
+      r=U(r,vec2(min(base,min(arm,cup))*sc,11.));
+      if(uCatBig>0.5){ vec3 cw=q-(pv-dir*0.6); r=U(r,vec2(sdTorusY(cw.xzy*vec3(1,1,1),vec2(0.32,0.13))*sc,22.)); }
+    } else r=U(r,vec2((length(q-vec3(0,1.,0))-3.)*sc,0.));
+  }
+  if(uProj.w>0.){
+    vec3 q=p-uProj.xyz;
+    if(uProjT<0.5) r=U(r,vec2(sdSph(q,uProj.w),43.));
+    else if(uProjT<1.5) r=U(r,vec2(sdEll(q,vec3(uProj.w*1.3,uProj.w,uProj.w)),42.));
+    else { r=U(r,vec2(sdCylY(q,uProj.w*0.6,uProj.w)-0.02,35.)); }
+  }
+  if(uCat2.w>0.){
+    float sc=uCat2.w; vec3 q=(p-uCat2.xyz)/sc; if(uCatFlip2>0.5) q.x=-q.x;
+    if(length(q-vec3(0,1.,0))<3.2){
+      float base=sdBox(q-vec3(0,0.1,0),vec3(1.0,0.1,0.55));
+      base=min(base,min(sdBox(q-vec3(0,0.55,0.42),vec3(0.08,0.5,0.06)),sdBox(q-vec3(0,0.55,-0.42),vec3(0.08,0.5,0.06))));
+      base=min(base,sdCap(q,vec3(0,1.0,-0.5),vec3(0,1.0,0.5),0.06));
+      vec3 dir=vec3(-cos(uCatA2),sin(uCatA2),0.);
+      vec3 pv=vec3(0,1.0,0); vec3 tip=pv+dir*1.6;
+      float arm=sdCap(q,pv-dir*(uCatBig2>0.5?0.5:0.2),tip,0.07);
+      float cup=max(sdSph(q-tip,0.3),-sdSph(q-tip-normalize(vec3(sin(uCatA2),cos(uCatA2),0.))*0.14,0.27));
+      r=U(r,vec2(min(base,min(arm,cup))*sc,11.));
+      if(uCatBig2>0.5){ vec3 cw=q-(pv-dir*0.6); r=U(r,vec2(sdTorusY(cw.xzy*vec3(1,1,1),vec2(0.32,0.13))*sc,22.)); }
+    } else r=U(r,vec2((length(q-vec3(0,1.,0))-3.)*sc,0.));
+  }
+  if(uProj2.w>0.){
+    vec3 q=p-uProj2.xyz;
+    if(uProjT2<0.5) r=U(r,vec2(sdSph(q,uProj2.w),43.));
+    else if(uProjT2<1.5) r=U(r,vec2(sdEll(q,vec3(uProj2.w*1.3,uProj2.w,uProj2.w)),42.));
+    else { r=U(r,vec2(sdCylY(q,uProj2.w*0.6,uProj2.w)-0.02,35.)); }
+  }
+  if(uBall.w>0.) r=U(r,vec2(sdSph(p-uBall.xyz,uBall.w),38.));
+  if(uBall2.w>0.) r=U(r,vec2(sdSph(p-uBall2.xyz,uBall2.w),38.));
+  if(uSnow.w>0.) r=U(r,snowman(p,uSnow,uSnowRot,uSnowSmile,uSnowHead));
+  if(uArmy.w>0.){ vec3 aq=p-uArmy.xyz; float ix=clamp(floor(aq.x/1.5+0.5),-2.,2.); float iz=clamp(floor(-aq.z/1.7+0.5),0.,1.);
+    r=U(r,snowman(p,vec4(uArmy.xyz+vec3(ix*1.5+iz*0.75,0.,-iz*1.7),uArmy.w),uArmyRot+0.15*sin(ix*3.+iz),0.8,1.)); }
+  if(uSnow2.w>0.) r=U(r,snowman(p,uSnow2,uSnowRot2,0.5,1.));
+  if(uTramp.w>0.){
+    float sc=uTramp.w; vec3 q=(p-uTramp.xyz)/sc;
+    if(length(q-vec3(0,0.8,0))<3.0){
+      float d=1e5;
+      for(int L=0;L<3;L++){
+        if(float(L)>uTramp2+0.5) break;
+        vec3 lq=q-vec3(0,float(L)*0.75,0);
+        float ring=sdTorusY(lq-vec3(0,0.7,0),vec2(1.25,0.1));
+        r=U(r,vec2(ring*sc,43.));
+        float dip=uTrampDip*exp(-dot(lq.xz,lq.xz)*1.5)*(abs(float(L)-uTramp2)<0.5?1.:0.);
+        float mat=sdCylY(lq-vec3(0,0.69-dip,0),1.2,0.02);
+        r=U(r,vec2(mat*sc,22.));
+        float legs=1e5; for(int i=0;i<4;i++){ float a=float(i)*1.5708+0.785; vec3 lp=vec3(cos(a)*1.2,0,sin(a)*1.2); legs=min(legs,sdCap(lq,lp,lp+vec3(0,0.68,0),0.05)); }
+        r=U(r,vec2(legs*sc,31.));
+      }
+    } else r=U(r,vec2((length(q-vec3(0,0.8,0))-2.8)*sc,0.));
+  }
+  // character + excavator
+  r=U(r,character(p));
+  r=U(r,excavator(p));
+  // geyser
+  if(uGeyser>0.01){
+    float h=uGeyser*(uCola>0.5?2.2:6.);
+    vec3 gq=p-uGeyPos;
+    float w=0.22+0.08*sin(gq.y*6.-uTime*25.)+0.05*noise(gq*5.+vec3(0,-uTime*12.,0));
+    float col=sdCap(gq,vec3(0,0,0),vec3(0,h,0),w+gq.y*0.04);
+    col=smin(col,sdSph(gq-vec3(0,h,0),0.45+0.1*sin(uTime*20.)),0.3);
+    r=U(r,vec2(col,uCola>0.5?39.:18.));
+    if(uCola>0.5) r=U(r,vec2(sdCylY(p-uGeyPos-vec3(0,0.25,0),0.12,0.25),40.));
+  }
+  // particles
+  for(int i=0;i<14;i++){
+    if(uP[i].w>0.){ r=U(r,vec2(sdSph(p-uP[i].xyz,uP[i].w), uPType<0.5?23.:(uPType<1.5?18.:(uPType<2.5?24.:(uPType<3.5?34.:43.))))); }
+  }
+  return r;
+}
+
+vec3 calcN(vec3 p){vec2 e=vec2(0.0015,0);
+ return normalize(vec3(mapScene(p+e.xyy).x-mapScene(p-e.xyy).x,mapScene(p+e.yxy).x-mapScene(p-e.yxy).x,mapScene(p+e.yyx).x-mapScene(p-e.yyx).x));}
+
+float shadow(vec3 ro, vec3 rd){float res=1.,t=0.03;
+ for(int i=0;i<28;i++){float h=mapScene(ro+rd*t).x;res=min(res,10.*h/t);t+=clamp(h,0.04,0.6);if(res<0.01||t>14.)break;}
+ return clamp(res,0.,1.);}
+float ao(vec3 p,vec3 n){float o=0.,s=1.;for(int i=1;i<5;i++){float h=0.07*float(i);o+=(h-mapScene(p+n*h).x)*s;s*=0.6;}return clamp(1.-2.2*o,0.,1.);}
+
+vec3 matCol(float m, vec3 p){
+  if(m<1.5){ vec3 gc=vec3(0.30,0.60,0.20)*(0.82+0.32*noise(p*9.)+0.12*noise(p*31.));
+    gc*=0.92+0.1*step(0.5,fract(p.x*0.55+0.05*noise(p*2.)));
+    float fs=smoothstep(0.86,0.9,noise(p*23.+7.)); gc=mix(gc,mix(vec3(1.,0.95,0.4),vec3(1.),step(0.5,noise(p*5.))),fs*0.85);
+    return mix(gc, vec3(0.93,0.95,1.0)*(0.92+0.08*noise(p*7.)), uSnowG);}
+  if(m<2.5){ float b=0.5+0.5*sin(p.y*4.0+noise(p*1.3)*2.5);
+    vec3 c=mix(vec3(0.66,0.4,0.2),vec3(0.5,0.29,0.14),b);
+    c=mix(c,vec3(0.38,0.22,0.12),smoothstep(-2.,-7.,p.y)*0.6);
+    c*=0.85+0.25*noise(p*18.);
+    float st=smoothstep(0.84,0.9,noise(p*16.3)); c=mix(c,vec3(0.42,0.36,0.32),st*0.8);
+    return c;}
+  if(m<3.5) return vec3(0.96,0.72,0.58);
+  if(m<4.5) return vec3(0.92,0.3,0.05);
+  if(m<5.5) return vec3(0.22,0.35,0.62);
+  if(m<6.5) return vec3(0.97);
+  if(m<7.5) return vec3(0.06);
+  if(m<8.5) return vec3(0.28,0.17,0.1);
+  if(m<9.5) return vec3(0.98,0.55,0.5);
+  if(m<10.5) return vec3(0.6,0.63,0.68);
+  if(m<11.5) return vec3(0.5,0.32,0.18);
+  if(m<12.5) return vec3(0.93,0.88,0.78);
+  if(m<13.5) return vec3(0.72,0.25,0.2);
+  if(m<14.5) return vec3(0.92,0.9,0.85);
+  if(m<15.5) return vec3(0.25,0.55,0.25)*(0.8+0.4*noise(p*6.));
+  if(m<16.5) return vec3(0.4,0.26,0.15);
+  if(m<17.5) return vec3(0.45,0.5,0.55);
+  if(m<18.5) return vec3(0.55,0.8,1.0);
+  if(m<19.5) return vec3(0.35,0.37,0.36)*(0.7+0.5*noise(p*10.))+vec3(0.15,0.07,0.)*noise(p*4.);
+  if(m<20.5) return vec3(0.3,1.0,0.4);
+  if(m<21.5) return vec3(1.0,0.75,0.1);
+  if(m<22.5) return vec3(0.08,0.08,0.09);
+  if(m<23.5) return vec3(0.5,0.32,0.18)*(0.8+0.4*noise(p*12.));
+  if(m<24.5) return vec3(1.,0.85,0.3);
+  if(m<25.5) return vec3(0.7,0.5,0.3);
+  if(m<26.5) return vec3(0.55,0.75,0.9);
+  if(m<31.5) return vec3(0.78,0.55,0.22);
+  if(m<32.5) return vec3(0.12,0.16,0.3);
+  if(m<33.5) return vec3(0.92,0.93,0.95);
+  if(m<34.5) return vec3(0.8);
+  if(m<35.5) return vec3(0.35,0.42,0.38)*(0.85+0.3*step(0.5,fract(p.y*6.)));
+  if(m<36.5) return mix(vec3(1.,0.45,0.05),vec3(1.),step(0.8,fract(p.y*4.)));
+  if(m<38.5) return vec3(1.0);
+  if(m<39.5) return vec3(0.35,0.18,0.08);
+  if(m<40.5) return vec3(0.2,0.1,0.05);
+  if(m<41.5) return vec3(0.6,0.78,0.92);
+  if(m<42.5) return mix(vec3(0.1,0.45,0.12),vec3(0.35,0.7,0.25),step(0.5,fract(atan(p.z-uProj.z,p.y-uProj.y)*2.5)));
+  if(m<44.5){ vec2 tq=fract(vec2(p.x+p.z,p.y)*4.); float gr=step(0.06,tq.x)*step(0.06,tq.y); return mix(vec3(0.85,0.9,0.95),vec3(0.25,0.62,0.85)*(0.9+0.15*noise(p*8.)),gr); }
+  if(m>=51.) return uRobEye>1.5?vec3(1.,0.03,0.02):vec3(0.3,1.,0.4);
+  if(m>=49.){ return fract(m)>0.25?vec3(0.25,0.5,0.95):vec3(0.95,0.95,1.0); }
+  if(m>=47.){ float f=fract(m); return f<0.3?vec3(1.,0.3,0.3):(f<0.6?vec3(0.3,1.,0.4):vec3(1.,0.85,0.2)); }
+  if(m<46.){ float f=fract(m); return f<0.3?vec3(1.,0.35,0.55):(f<0.6?vec3(1.,0.85,0.2):vec3(0.95,0.95,1.)); }
+  return vec3(0.9,0.12,0.08);
+}
+
+void main(){
+  vec2 uv=(gl_FragCoord.xy*2.-uRes)/uRes.y;
+  vec3 ro=uCamPos; vec3 fw=normalize(uCamTgt-ro); vec3 rt=normalize(cross(fw,vec3(0,1,0))); vec3 up=cross(rt,fw);
+  vec3 rd=normalize(fw*2.0+uv.x*rt+uv.y*up);
+  // sky
+  vec3 skyD=mix(vec3(0.55,0.78,0.98),vec3(0.25,0.5,0.9),clamp(rd.y*1.5,0.,1.));
+  vec3 skyN=mix(vec3(0.08,0.1,0.22),vec3(0.02,0.03,0.08),clamp(rd.y*1.5,0.,1.));
+  vec3 sunDir=normalize(vec3(0.55,0.85,0.6));
+  skyD=mix(skyD,vec3(1.0,0.86,0.7),pow(1.-clamp(rd.y,0.,1.),5.)*0.25);
+  skyD+=vec3(1.,0.85,0.6)*pow(clamp(dot(rd,sunDir),0.,1.),60.)*0.6+vec3(1.,0.9,0.7)*pow(clamp(dot(rd,sunDir),0.,1.),6.)*0.12;
+  if(rd.y>0.){ vec2 cp=rd.xz/(rd.y+0.08)*1.3+vec2(uTime*0.02,0.); float cn=noise(vec3(cp,0.))*0.55+noise(vec3(cp*2.1,1.))*0.3+noise(vec3(cp*4.3,2.))*0.15;
+    float cm=smoothstep(0.55,0.78,cn)*smoothstep(0.0,0.25,rd.y); skyD=mix(skyD,vec3(1.,0.98,0.95)-0.12*(1.-cn),cm*0.85); }
+  vec3 sky=mix(skyD,skyN,uNight);
+  vec3 col=sky;
+  float t=0.1; vec2 h; bool hit=false;
+  for(int i=0;i<110;i++){ h=mapScene(ro+rd*t); if(abs(h.x)<0.0012*t){hit=true;break;} t+=h.x*0.9; if(t>40.)break; }
+  if(hit){
+    vec3 p=ro+rd*t; vec3 n=calcN(p); float m=h.y;
+    vec3 alb=matCol(m,p);
+    vec3 sunD=normalize(vec3(0.55,0.85,0.6));
+    vec3 sunC=mix(vec3(1.7,1.45,1.15),vec3(0.18,0.22,0.45),uNight);
+    float dif=clamp(dot(n,sunD),0.,1.);
+    float sh= dif>0.001? shadow(p+n*0.01,sunD):0.;
+    float occ=ao(p,n);
+    vec3 amb=mix(vec3(0.32,0.4,0.55),vec3(0.05,0.07,0.15),uNight);
+    float wrapd=(m==3.||m==9.)?clamp((dot(n,sunD)+0.35)/1.35,0.,1.):dif;
+    vec3 skyAmb=mix(mix(vec3(0.30,0.36,0.30),vec3(0.42,0.52,0.72),0.5+0.5*n.y),vec3(0.05,0.07,0.15),uNight);
+    vec3 lin=sunC*wrapd*mix(sh,1.,(m==3.||m==9.)?0.25:0.) + skyAmb*occ*(0.75+0.25*n.y) + vec3(0.32,0.42,0.18)*occ*clamp(-n.y,0.,1.)*0.5*(1.-uNight);
+    if(m==3.||m==9.) lin+=vec3(0.35,0.08,0.04)*occ*(1.-uNight)*0.5;
+    if(uPool>0.5 && uWater>0.01 && p.y< -1.2+1.08*uWater && abs(p.x-0.9)<1.35 && p.z>-2.65 && p.z<0.05 && n.y>-0.5){
+      vec3 cq=vec3(p.xz*3.2,uTime*0.8); float c1=noise(cq)+noise(cq*1.9+3.); float ca=pow(1.-abs(c1-1.),6.);
+      lin+=vec3(0.7,0.95,1.)*ca*0.9*(1.-uNight)*smoothstep(-1.4,-0.6,p.y)+vec3(0.,0.04,0.06); }
+    // rim
+    float fre=pow(clamp(1.+dot(n,rd),0.,1.),3.);
+    lin+=fre*occ*mix(vec3(0.6,0.7,0.9),vec3(0.2,0.6,0.3)*uGreen,uNight)*0.5;
+    // green point light from hatch
+    if(uGreen>0.01){
+      vec3 lp=vec3(0.9,uHatchY+0.5,-0.9); vec3 ld=lp-p; float dl=length(ld); ld/=dl;
+      float gd=clamp(dot(n,ld),0.,1.);
+      lin+=vec3(0.3,1.0,0.4)*uGreen*gd*1.1/(1.+dl*dl*0.9);
+    }
+    // flashlight warm light from character head direction
+    if(uFlash>0.5){
+      vec3 lp=uChar+vec3(0.3,1.6,1.0); vec3 ld=lp-p; float dl=length(ld); ld/=dl;
+      lin+=vec3(1.,0.85,0.65)*clamp(dot(n,ld),0.,1.)*1.6/(1.+dl*dl*0.5);
+    }
+    // specular
+    vec3 hv=normalize(sunD-rd); float sp=pow(clamp(dot(n,hv),0.,1.),32.)*sh*dif;
+    float spk=(m==10.||m==19.||m==18.||m==6.||m==21.||m==31.||m==33.||m==39.)?0.6:((m==3.||m==4.||m==5.||m==41.)?0.18:0.08);
+    col=alb*lin+sp*spk*sunC;
+    if(m==20.) col=vec3(0.4,1.4,0.5)*uGreen*1.6+alb*0.1;
+    if(m==21. && uFurn>1.5 && p.y<0.) col=vec3(2.2,1.7,0.8);
+    if(m==21. && uCake.w>0. && length(p-uCake.xyz)<1.2*uCake.w+0.3) col=vec3(2.6,1.8,0.6);
+    if(m>=47. && m<49.) col=alb*2.6;
+    if(m==51.) col=alb*(uRobEye>1.5?1.7:(uRobEye>0.5?2.8:0.12));
+    if(uHatchOpen>0.5 && m==2. && length(p.xz-vec2(0.9,-1.0))<0.75 && p.y< uHatchY+0.1) col=vec3(0.4,1.6,0.6);
+    if(m==24. && uFireB>0.01 && uBal.w>0.) col=vec3(3.0,1.6,0.4); else if(m==24. && uFurn>1.5 && p.y<0.) col=vec3(2.4,2.0,1.1); else if(m==24.) col=mix(vec3(2.2,1.8,0.7),vec3(2.0,0.6,0.1),clamp(-(p.y-uRocket.y)/(1.5*uRocket.w+0.01),0.,1.));
+    if(m==38.) col=mix(col,vec3(1.),0.35);
+    if(m==30.) col=uLantern>0.01?vec3(3.2,1.7,0.4)*uLantern:vec3(0.15,0.12,0.1);
+    if(m==26.) col=mix(vec3(0.6,0.8,1.0)*0.9,vec3(1.0,0.8,0.4)*0.9,uNight)+sp*0.5;
+    if(m==18.) col=mix(col,vec3(0.75,0.92,1.0),0.35);
+    // fog
+    col=mix(col,mix(sky,vec3(0.85,0.82,0.78),0.15*(1.-uNight)),1.-exp(-0.0005*t*t));
+  }
+  // green volumetric glow approx in screen
+  if(uGreen>0.01){
+    vec3 lp=vec3(0.9,uHatchY+0.4,-0.9);
+    vec3 w=lp-ro; float tt=max(dot(w,rd),0.); float d=length(w-rd*tt);
+    if(!hit || t>tt-0.5) col+=vec3(0.2,0.9,0.35)*uGreen*0.22*exp(-d*d*2.5);
+  }
+  if(uPool>0.5 && uWater>0.01){
+    vec3 bmin=vec3(-0.4,-1.2,-2.6), bmax=vec3(2.2,-1.2+1.08*uWater,0.0);
+    vec3 i1=(bmin-ro)/rd, i2=(bmax-ro)/rd; vec3 tn=min(i1,i2), tf=max(i1,i2);
+    float t0=max(max(tn.x,tn.y),tn.z), t1=min(min(tf.x,tf.y),tf.z);
+    float tend=hit?t:1e4;
+    if(t1>max(t0,0.) && t0<tend){ float d=min(t1,tend)-max(t0,0.);
+      vec3 ent=ro+rd*max(t0,0.);
+      vec3 wc=mix(vec3(0.1,0.55,0.8),vec3(0.02,0.08,0.2),uNight);
+      col=mix(col,wc,1.-exp(-d*0.9));
+      if(abs(ent.y-bmax.y)<0.01){ float rip=noise(vec3(ent.xz*6.,uTime*1.5))*noise(vec3(ent.xz*3.-uTime,1.)); col+=vec3(0.9,0.95,1.)*smoothstep(0.35,0.6,rip)*0.25*(1.-uNight); col=mix(col,sky,0.25); }
+      if(abs(ent.z)<0.01){ col+=vec3(0.6,0.9,1.)*0.08; } } }
+  // ACES-ish tonemap
+  col*=0.7; col=(col*(2.51*col+0.03))/(col*(2.43*col+0.59)+0.14);
+  float lu=dot(col,vec3(0.299,0.587,0.114)); col=mix(vec3(lu),col,1.38); col*=vec3(1.03,1.0,0.97);
+  col=pow(clamp(col,0.,1.),vec3(0.4545));
+  // vignette
+  vec2 q=gl_FragCoord.xy/uRes; col*=0.55+0.45*pow(16.*q.x*q.y*(1.-q.x)*(1.-q.y),0.2);
+  fragColor=vec4(col,1);
+}
+</script>
+<script>
+const glc=document.getElementById('gl');
+const gl=glc.getContext('webgl2',{preserveDrawingBuffer:true});
+const vs=`#version 300 es
+in vec2 a;void main(){gl_Position=vec4(a,0,1);}`;
+function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(o);return o;}
+const prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,vs));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,document.getElementById('fs').textContent));gl.linkProgram(prog);
+if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) throw gl.getProgramInfoLog(prog);
+gl.useProgram(prog);
+const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const al=gl.getAttribLocation(prog,'a');gl.enableVertexAttribArray(al);gl.vertexAttribPointer(al,2,gl.FLOAT,false,0,0);
+const L={};function u(n){return L[n]||(L[n]=gl.getUniformLocation(prog,n));}
+window.renderGL=function(S){
+  gl.viewport(0,0,glc.width,glc.height);
+  gl.uniform2f(u('uRes'),glc.width,glc.height);
+  for(const [k,v] of Object.entries(S)){
+    if(k==='uP'){gl.uniform4fv(u('uP[0]'),new Float32Array(v));continue;}
+    const loc=u(k); if(!loc) continue;
+    if(typeof v==='number') gl.uniform1f(loc,v);
+    else if(v.length===3) gl.uniform3fv(loc,v);
+    else if(v.length===4) gl.uniform4fv(loc,v);
+  }
+  gl.drawArrays(gl.TRIANGLES,0,3);
+};
+const oc=document.getElementById('out').getContext('2d');
+function wrap(ctx,text,maxW){const w=text.split(' ');const lines=[];let cur='';for(const x of w){const t=cur?cur+' '+x:x;if(ctx.measureText(t).width>maxW&&cur){lines.push(cur);cur=x}else cur=t}if(cur)lines.push(cur);return lines;}
+window.compose=function(T){
+  oc.imageSmoothingEnabled=true;oc.imageSmoothingQuality='high';
+  oc.filter='saturate(1.08) contrast(1.08)'; oc.drawImage(glc,0,0,1080,1920); oc.filter='none';
+  oc.save(); oc.globalCompositeOperation='soft-light'; oc.globalAlpha=0.18; const gg=oc.createLinearGradient(0,0,0,1920); gg.addColorStop(0,'#ffd9a0'); gg.addColorStop(1,'#5a7fb0'); oc.fillStyle=gg; oc.fillRect(0,0,1080,1920); oc.restore();
+  oc.save(); oc.globalCompositeOperation='screen'; oc.globalAlpha=0.13; oc.filter='blur(22px) brightness(1.1) contrast(1.8)'; oc.drawImage(glc,0,0,1080,1920); oc.restore(); oc.filter='none';
+  if(T.flash>0){oc.fillStyle=`rgba(255,255,255,${T.flash})`;oc.fillRect(0,0,1080,1920);}
+  if(T.dark>0){oc.fillStyle=`rgba(0,0,0,${T.dark})`;oc.fillRect(0,0,1080,1920);}
+  for(const it of (T.texts||[])){
+    oc.save();
+    oc.font=`${it.size}px P`;oc.textAlign='center';oc.textBaseline='middle';
+    const lines=wrap(oc,it.text,960);
+    const lh=it.size*1.15; let y=it.y-(lines.length-1)*lh/2;
+    oc.globalAlpha=it.alpha??1;
+    oc.translate(540,it.y); oc.scale(it.scale??1,it.scale??1); oc.translate(-540,-it.y);
+    for(const ln of lines){
+      oc.lineJoin='round';oc.lineWidth=it.size*0.22;oc.strokeStyle='rgba(0,0,0,0.9)';oc.strokeText(ln,540,y);
+      oc.fillStyle=it.color||'#fff';oc.fillText(ln,540,y);y+=lh;}
+    oc.restore();
+  }
+  return document.getElementById('out').toDataURL('image/jpeg',0.9);
+};
+document.fonts.load('90px P').then(()=>{window.ready=true;});
+</script></body></html>

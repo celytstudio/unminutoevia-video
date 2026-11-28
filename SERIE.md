@@ -52,6 +52,10 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 2 creata 27/11 slot 19 (iniziata 18:20, pronta ~18:42): video/robot_parte2.mp4 – CTA "COPIA". Il robot insegue Mario, poi copia tutto (salta, si ferma, alza il braccio), Mario indica Gino e il robot si gira verso di lui con gli occhi rossi (anim31.js; NB Mario uEyes.y=1.55 per stare in piedi sul prato). PROGRAMMATA 27/11 alle 19:00 su TT+IG+YT (postId 4e66908d; YT caricato privato, pubblico alle 19). YouTube 27/11: 3/3 usati.
 - Parte 3 FINALE creata 28/11 slot 11 (iniziata 10:25, pronta ~10:50): video/robot_parte3.mp4 – il robot copia Gino, Gino chiude gli occhi e non si muove, il robot si spegne; la mattina dopo Mario lo riaccende e annaffia i suoi fiori… e ogni tanto anche Gino; FINE (anim32.js). PROGRAMMATA 28/11 alle 11:00 su TT+IG+YT (postId 2375befd). YouTube 28/11: 1/3 usati. SERIE CONCLUSA.
 
+## SCIVOLO (in corso – grafica V2.1) – "Lo scivolo gigante"
+- Parte 1 creata 28/11 slot 15 (iniziata 14:25, pronta ~15:05): video/scivolo_parte1.mp4 – CTA "SCIVOLO". Giorno 1 scala, giorno 2 scivolo + trampolino, giorno 3 sapone; Gino sale, Mario preoccupato, parte velocissimo e vola sopra la siepe di Mario (scene28.html: uSlide xyz + w stadio 1 scala / 2 completo; anim33.js). Da pubblicare quando l'utente dice caricalo.
+- Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 29/11 slot 11.
+
 ## Prossima
 NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
 Per recuperare: 25/11 nessun altro video dopo la Zucca; 26/11 09:05 Zucca finale su YouTube, poi solo 2 video (slot 15 e 19: NUOVA serie parte 1 e 2) pubblicati subito anche su YouTube; dal 27/11 3 video al giorno (11, 15, 19) tutti subito anche su YouTube.
@@ -70,3 +74,4 @@ L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - 27/11 robot p1 (giorno, anim30, nuovo modello robot): avvio 14:25, render 1266s, pronto ~14:55.
 - 27/11 robot p2 (giorno, anim31): avvio 18:20, render 940s, pronto ~18:42.
 - 28/11 robot p3 (giorno, anim32): avvio 10:25, render 1168s, pronto ~10:50.
+- 28/11 scivolo p1 (giorno, anim33, nuovo modello): avvio 14:25, render 1409s + rifatto hook, pronto ~15:05. Lezione: testare sempre i keyframe del hook dopo i movimenti di camera.
