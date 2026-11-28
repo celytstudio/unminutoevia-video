@@ -53,7 +53,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 - Parte 3 FINALE creata 28/11 slot 11 (iniziata 10:25, pronta ~10:50): video/robot_parte3.mp4 – il robot copia Gino, Gino chiude gli occhi e non si muove, il robot si spegne; la mattina dopo Mario lo riaccende e annaffia i suoi fiori… e ogni tanto anche Gino; FINE (anim32.js). PROGRAMMATA 28/11 alle 11:00 su TT+IG+YT (postId 2375befd). YouTube 28/11: 1/3 usati. SERIE CONCLUSA.
 
 ## SCIVOLO (in corso – grafica V2.1) – "Lo scivolo gigante"
-- Parte 1 creata 28/11 slot 15 (iniziata 14:25, pronta ~15:05): video/scivolo_parte1.mp4 – CTA "SCIVOLO". Giorno 1 scala, giorno 2 scivolo + trampolino, giorno 3 sapone; Gino sale, Mario preoccupato, parte velocissimo e vola sopra la siepe di Mario (scene28.html: uSlide xyz + w stadio 1 scala / 2 completo; anim33.js). Da pubblicare quando l'utente dice caricalo.
+- Parte 1 creata 28/11 slot 15 (iniziata 14:25, pronta ~15:05): video/scivolo_parte1.mp4 – CTA "SCIVOLO". Giorno 1 scala, giorno 2 scivolo + trampolino, giorno 3 sapone; Gino sale, Mario preoccupato, parte velocissimo e vola sopra la siepe di Mario (scene28.html: uSlide xyz + w stadio 1 scala / 2 completo; anim33.js). PUBBLICATA 28/11 15:00 su TT+IG+YT (postId 6e8ed453). YouTube 28/11: 2/3 usati.
 - Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 29/11 slot 11.
 
 ## Prossima
