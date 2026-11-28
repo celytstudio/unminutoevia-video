@@ -50,7 +50,7 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 ## ROBOT (in corso – grafica V2.1) – "Il robot in giardino"
 - Parte 1 creata 27/11 slot 15 (iniziata 14:25, pronta ~14:55): video/robot_parte1.mp4 – CTA "ROBOT". Gino costruisce un robot (giorno 1 scatoloni, giorno 2 secchio come testa, giorno 3 lo accende: "CIAO GINO"), annaffia i fiori e anche Gino, poi vede Mario, occhi rossi, cammina verso casa sua (scene27.html: uRobot, uRobRot, uRobEye 0/1 verde/2 rosso, uRobArm, uRobBuild 0-3; anim30.js). PUBBLICATA 27/11 14:53 su TT+IG+YT (postId 21c79a31). YouTube 27/11: 2/3 usati.
 - Parte 2 creata 27/11 slot 19 (iniziata 18:20, pronta ~18:42): video/robot_parte2.mp4 – CTA "COPIA". Il robot insegue Mario, poi copia tutto (salta, si ferma, alza il braccio), Mario indica Gino e il robot si gira verso di lui con gli occhi rossi (anim31.js; NB Mario uEyes.y=1.55 per stare in piedi sul prato). PROGRAMMATA 27/11 alle 19:00 su TT+IG+YT (postId 4e66908d; YT caricato privato, pubblico alle 19). YouTube 27/11: 3/3 usati.
-- Parte 3 FINALE 28/11 slot 11.
+- Parte 3 FINALE creata 28/11 slot 11 (iniziata 10:25, pronta ~10:50): video/robot_parte3.mp4 – il robot copia Gino, Gino chiude gli occhi e non si muove, il robot si spegne; la mattina dopo Mario lo riaccende e annaffia i suoi fiori… e ogni tanto anche Gino; FINE (anim32.js). Da pubblicare quando l'utente dice caricalo. SERIE CONCLUSA.
 
 ## Prossima
 NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
@@ -69,3 +69,4 @@ L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - 27/11 mongolfiera p3 (notte+giorno, anim29): avvio 10:25, render 1592s, pronto ~11:00.
 - 27/11 robot p1 (giorno, anim30, nuovo modello robot): avvio 14:25, render 1266s, pronto ~14:55.
 - 27/11 robot p2 (giorno, anim31): avvio 18:20, render 940s, pronto ~18:42.
+- 28/11 robot p3 (giorno, anim32): avvio 10:25, render 1168s, pronto ~10:50.
