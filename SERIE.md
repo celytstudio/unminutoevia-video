@@ -54,7 +54,8 @@ Regola utente (19/11 19:18): se si fa una PARTE 1, i video successivi (slot 11/1
 
 ## SCIVOLO (in corso – grafica V2.1) – "Lo scivolo gigante"
 - Parte 1 creata 28/11 slot 15 (iniziata 14:25, pronta ~15:05): video/scivolo_parte1.mp4 – CTA "SCIVOLO". Giorno 1 scala, giorno 2 scivolo + trampolino, giorno 3 sapone; Gino sale, Mario preoccupato, parte velocissimo e vola sopra la siepe di Mario (scene28.html: uSlide xyz + w stadio 1 scala / 2 completo; anim33.js). PUBBLICATA 28/11 15:00 su TT+IG+YT (postId 6e8ed453). YouTube 28/11: 2/3 usati.
-- Parte 2 slot 19 (inizio 18:20), parte 3 FINALE 29/11 slot 11.
+- Parte 2 creata 28/11 slot 19 (iniziata 18:20, pronta ~18:50): video/scivolo_parte2.mp4 – CTA "SPLASH". Gino atterra nella piscina di Mario, Mario arrabbiato ("smontalo!"), Gino sposta lo scivolo accanto alla piscina (SP=[-3.6,0,-1.0], il trampolino finisce sopra l'acqua), Mario sale in cima (anim34.js). Da pubblicare quando l'utente dice caricalo.
+- Parte 3 FINALE 29/11 slot 11.
 
 ## Prossima
 NUOVO RITMO (utente 25/11 11:05): 3 VIDEO AL GIORNO, slot 11 / 15 / 19 (inizio 10:25 / 14:25 / 18:20), così YouTube (max 3/giorno con vidIQ gratis) resta in pari.
@@ -75,3 +76,4 @@ L'utente vuole il video PRONTO all'orario dello slot, quindi si inizia prima.
 - 27/11 robot p2 (giorno, anim31): avvio 18:20, render 940s, pronto ~18:42.
 - 28/11 robot p3 (giorno, anim32): avvio 10:25, render 1168s, pronto ~10:50.
 - 28/11 scivolo p1 (giorno, anim33, nuovo modello): avvio 14:25, render 1409s + rifatto hook, pronto ~15:05. Lezione: testare sempre i keyframe del hook dopo i movimenti di camera.
+- 28/11 scivolo p2 (giorno+piscina, anim34): avvio 18:20, render 1443s, pronto ~18:50.
